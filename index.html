@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Rincón de Beita · Pasteles y detalles dulces</title>
+  <meta name="description" content="El Rincón de Beita – Tartas personalizadas, cookies decoradas y mesas dulces para tus momentos especiales." />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Anime.js para animaciones -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Animación de entrada del hero
+      anime.timeline({ easing: 'easeOutQuad', duration: 700 })
+        .add({
+          targets: '.hero-title',
+          translateY: [20, 0],
+          opacity: [0, 1]
+        })
+        .add({
+          targets: '.hero-subtitle',
+          translateY: [15, 0],
+          opacity: [0, 1]
+        }, '-=300')
+        .add({
+          targets: '.hero-tags .tag',
+          opacity: [0, 1],
+          translateY: [10, 0],
+          delay: anime.stagger(40)
+        }, '-=250')
+        .add({
+          targets: '.hero-actions > *',
+          opacity: [0, 1],
+          translateY: [10, 0],
+          delay: anime.stagger(60)
+        }, '-=200');
+
+      // Pastel SVG: animación de frosting "palpitando" y sprinkles flotando
+      anime({
+        targets: '.cake-frosting',
+        translateY: [0, -2],
+        direction: 'alternate',
+        loop: true,
+        easing: 'easeInOutSine',
+        duration: 1400
+      });
+
+      anime({
+        targets: '.cake-sprinkle',
+        translateY: [0, -4],
+        opacity: [0.6, 1],
+        delay: anime.stagger(120),
+        direction: 'alternate',
+        loop: true,
+        easing: 'easeInOutSine',
+        duration: 1100
+      });
+
+      // Efecto parallax suave en el pastel al hacer scroll
+      const cakeWrapper = document.querySelector('.hero-cake-wrapper');
+      if (cakeWrapper) {
+        window.addEventListener('scroll', function () {
+          const rect = cakeWrapper.getBoundingClientRect();
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          const visible = 1 - Math.min(Math.max(rect.top / vh, 0), 1);
+          cakeWrapper.style.transform = `translateY(${(1 - visible) * 15}px)`;
+        });
+      }
+
+      // Animaciones al hacer scroll en secciones
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          }
+        });
+      }, { threshold: 0.2 });
+
+      document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="brand-mark">B</div>
+        <div class="brand-text">
+          <span class="brand-title">El Rincón de Beita</span>
+          <span class="brand-subtitle">Tartas · Cookies · Detalles dulces</span>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#proceso">Cómo trabajo</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1 class="hero-title">
+            Pasteles y detalles <span class="hero-highlight">hechos a mano</span>
+            para momentos que se recuerdan.
+          </h1>
+          <p class="hero-subtitle">
+            En El Rincón de Beita creo tartas personalizadas, cookies decoradas y pequeños
+            detalles dulces para cumpleaños, comuniones, bautizos y todo lo que te apetezca celebrar.
+          </p>
+          <div class="hero-tags">
+            <span class="tag">Tartas personalizadas</span>
+            <span class="tag">Cookies decoradas</span>
+            <span class="tag">Mesas dulces</span>
+            <span class="tag">Pedidos a medida</span>
+          </div>
+          <div class="hero-actions">
+            <a href="#contacto" class="btn-primary">Quiero pedir un presupuesto</a>
+            <a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener" class="btn-secondary">Ver trabajos en Instagram</a>
+            <span class="hero-note">Respondo personalmente cada mensaje :)</span>
+          </div>
+        </div>
+        <div class="hero-gallery hero-cake-wrapper">
+          <!-- Pastel SVG animado -->
+          <div class="hero-cake">
+            <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="cakeBody" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#ffe5cf" />
+                  <stop offset="1" stop-color="#f7c39c" />
+                </linearGradient>
+                <linearGradient id="cakeFrosting" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#ffd6ea" />
+                  <stop offset="1" stop-color="#f990b7" />
+                </linearGradient>
+              </defs>
+
+              <!-- plato -->
+              <ellipse cx="80" cy="126" rx="50" ry="8" fill="#f0e4ff" />
+
+              <!-- cuerpo del pastel -->
+              <rect x="35" y="70" width="90" height="40" rx="8" fill="url(#cakeBody)" />
+
+              <!-- frosting -->
+              <path class="cake-frosting" d="M35 70h90v14c0 4-3 7-7 7-4 0-6-3-10-3-4 0-6 3-10 3-4 0-6-3-10-3-4 0-6 3-10 3-4 0-6-3-10-3-4 0-6 3-10 3-4 0-7-3-7-7z" fill="url(#cakeFrosting)" />
+
+              <!-- sprinkles -->
+              <circle class="cake-sprinkle" cx="50" cy="76" r="1.5" fill="#ffb7d3" />
+              <circle class="cake-sprinkle" cx="65" cy="74" r="1.5" fill="#ffe7aa" />
+              <circle class="cake-sprinkle" cx="80" cy="75" r="1.5" fill="#c8e6ff" />
+              <circle class="cake-sprinkle" cx="95" cy="76" r="1.5" fill="#ffb7d3" />
+              <circle class="cake-sprinkle" cx="110" cy="74" r="1.5" fill="#ffe7aa" />
+
+              <!-- vela -->
+              <rect x="76" y="40" width="8" height="28" rx="3" fill="#ffd6ea" />
+              <!-- llama -->
+              <path d="M80 30c4 5 4 9 0 12-4-3-4-7 0-12z" fill="#ffb347" />
+            </svg>
+          </div>
+
+          <!-- Tarjetas pequeñas alrededor del pastel -->
+          <article class="hero-card reveal-on-scroll">
+            <span class="hero-card-title">Tartas de celebración</span>
+            <p class="hero-card-text">Bizcochos jugosos, rellenos cremosos y diseños adaptados a tu idea.</p>
+          </article>
+          <article class="hero-card reveal-on-scroll">
+            <span class="hero-card-title">Cookies decoradas</span>
+            <p class="hero-card-text">Galletas personalizadas para detalles, mesas dulces o recuerdos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section class="section" id="productos">
+      <div class="container reveal-on-scroll">
+        <div class="section-header">
+          <p class="section-kicker">Qué puedo preparar para ti</p>
+          <h2 class="section-title">Productos dulces para momentos especiales</h2>
+          <p class="section-subtitle">Cada encargo es único. Estos son algunos de los tipos de trabajo que suelo hacer en El Rincón de Beita.</p>
+        </div>
+
+        <div class="products-grid">
+          <article class="product-card">
+            <span class="product-title">Tartas personalizadas</span>
+            <p class="product-text">Diseñadas a partir de tu idea: personajes, temática, colores o estilo. Ideal para cumpleaños, aniversarios y eventos familiares.</p>
+            <span class="badge">Tamaños desde 6 porciones</span>
+          </article>
+
+          <article class="product-card">
+            <span class="product-title">Tartas clásicas</span>
+            <p class="product-text">Sabores de siempre: chocolate, vainilla, red velvet, zanahoria, etc. Decoración sencilla pero cuidada.</p>
+            <span class="badge">Perfectas para llevar de invitado</span>
+          </article>
+
+          <article class="product-card">
+            <span class="product-title">Cookies decoradas</span>
+            <p class="product-text">Galletas de mantequilla o cacao decoradas a mano. Ideales como detalles para invitados o para mesas dulces.</p>
+            <span class="badge">Se pueden empaquetar individualmente</span>
+          </article>
+
+          <article class="product-card">
+            <span class="product-title">Cupcakes y mini dulces</span>
+            <p class="product-text">Mini tartas, cupcakes y otros bocados dulces para acompañar tu tarta principal o montar una mesa dulce.</p>
+          </article>
+
+          <article class="product-card">
+            <span class="product-title">Mesas dulces pequeñas</span>
+            <p class="product-text">Selección de dulces coordinados para eventos íntimos. Podemos combinar tartas, cookies, cupcakes y otros detalles.</p>
+          </article>
+
+          <article class="product-card">
+            <span class="product-title">Detalles personalizados</span>
+            <p class="product-text">Cajitas regalo, packs temáticos y detalles dulces personalizados para sorprender a quien tú quieras.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESO DE TRABAJO -->
+    <section class="section" id="proceso">
+      <div class="container reveal-on-scroll">
+        <div class="section-header">
+          <p class="section-kicker">Cómo trabajo</p>
+          <h2 class="section-title">Tu pedido, paso a paso</h2>
+          <p class="section-subtitle">Me gusta que todo quede claro desde el principio: hablamos de tu idea, te propongo una opción y concretamos el día de entrega.</p>
+        </div>
+
+        <div class="process-grid">
+          <article class="step-card">
+            <div class="step-badge">1</div>
+            <p><strong>Cuéntame lo que quieres</strong><br>
+              Rellena el formulario con la fecha, el tipo de evento y una idea aproximada de lo que te gustaría (tarta, cookies, mesa dulce...).</p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-badge">2</div>
+            <p><strong>Te respondo con una propuesta</strong><br>
+              Te escribiré al email para comentarte opciones, tamaños, sabores y precio aproximado para tu encargo.</p>
+          </article>
+
+          <article class="step-card">
+            <div class="step-badge">3</div>
+            <p><strong>Confirmamos y preparo tu pedido</strong><br>
+              Una vez esté todo claro, reservaré fecha y me pondré manos a la obra para que todo llegue perfecto el día acordado.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="contact" id="contacto">
+      <div class="container contact-inner reveal-on-scroll">
+        <div>
+          <p class="section-kicker">Contacto</p>
+          <h2 class="section-title">Haz tu pedido o pide presupuesto</h2>
+          <p class="contact-highlight">
+            Cuanto más detalle me des (fecha, personas, tipo de dulce y temática), mejor podré ajustarme a lo que necesitas.
+          </p>
+          <p class="contact-note">
+            El formulario envía un correo directamente a mi bandeja de entrada. Te responderé lo antes posible.
+          </p>
+        </div>
+
+        <!-- Formulario con mailto -->
+        <form action="mailto:nerea.trebol@yahoo.es" method="post" enctype="text/plain">
+          <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="Nombre" required />
+          </div>
+
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="Email" required />
+          </div>
+
+          <div>
+            <label for="detalles">Cuéntame qué necesitas</label>
+            <textarea id="detalles" name="Mensaje" placeholder="Ej: tarta para 12 personas, cumpleaños infantil, temática unicornio, fecha 15/06..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">Enviar mensaje</button>
+          <p class="contact-note">Al pulsar "Enviar" se abrirá tu aplicación de correo para confirmar el envío.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>El Rincón de Beita · <span id="footer-year"></span> © Hecho a mano con mucho cariño.</span>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener">Instagram</a>
+        <span>·</span>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Año dinámico en el footer
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
