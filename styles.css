@@ -198,7 +198,7 @@ img {
 }
 
 .hero-card-title {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -427,6 +427,14 @@ footer {
 /* Responsive
    En desktop manda Tailwind; en mobile damos layout específico para hero y secciones.
 */
+
+@media(max-width: 1200px){
+
+  .hero-text-viewport {
+    transform: translateX(0%) translateY(200%);
+  }
+}
+
 
 @media (max-width: 768px) {
   /* Hero móvil: más aire arriba/abajo */
