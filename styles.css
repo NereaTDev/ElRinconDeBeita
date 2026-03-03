@@ -535,4 +535,19 @@ footer {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
   }
+
+  /* Galería: carrusel horizontal en móvil */
+  #galeria .grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #galeria figure {
+    flex: 0 0 80%;
+    max-width: 80%;
+  }
 }
