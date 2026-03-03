@@ -39,77 +39,10 @@ img {
   padding: 0 1.5rem;
 }
 
-/* HEADER */
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  backdrop-filter: blur(12px);
-  background: rgba(245, 245, 247, 0.94);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.7rem 0;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-}
-
-.brand-mark {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #e5edff, #c4d4f6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #1d3557;
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.brand-title {
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-}
-
-.brand-subtitle {
-  font-size: 0.7rem;
-  color: var(--text-muted);
-}
-
-nav ul {
-  display: flex;
-  list-style: none;
-  gap: 1.25rem;
-  margin: 0;
-  padding: 0;
-}
-
-nav a {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-muted);
-}
-
-nav a:hover {
-  color: var(--accent);
-}
+/* HEADER
+   Layout y estilos del header ahora los controla Tailwind en index.html.
+   Se mantiene sólo el comportamiento global de <a> más abajo.
+*/
 
 .btn-primary {
   display: inline-flex;
@@ -235,30 +168,31 @@ nav a:hover {
 /* Carrusel vertical de textos sobre la tarta */
 .hero-text-carousel {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   pointer-events: none;
 }
 
-.hero-text-block {
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, 10px);
-  opacity: 0;
-  max-width: 55%;
-  text-align: center;
-  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
-  pointer-events: auto;
-  color: #ffffff;
-  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.6);
+.hero-text-viewport {
+  width: 260px;
+  overflow: hidden;           /* sólo se ve un bloque a la vez */
+  transform: translateX(35%) translateY(200%); /* un poco fuera del hero hacia la derecha */
 }
 
-.hero-text-block.is-active {
-  opacity: 1;
-  transform: translate(-50%, 0);
+.hero-text-track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s ease-out;
+}
+
+.hero-text-block {
+  color: #ffffff;
+  text-align: left;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.7);
 }
 
 .hero-card-title {
@@ -480,32 +414,74 @@ footer {
   transform: translateY(0);
 }
 
-/* Responsive */
+/* Responsive
+   Nota: grid y columnas de hero, productos, proceso y contacto ahora las controla Tailwind.
+   En mobile damos un tratamiento distinto al hero con la tarta de fondo.
+*/
 
 @media (max-width: 768px) {
-  .hero-grid {
-    grid-template-columns: minmax(0, 1fr);
+  /* Hero móvil: tarta grande de fondo, texto centrado encima */
+  .hero {
+    padding-top: 2.4rem;
+    padding-bottom: 2.4rem;
   }
 
-  .hero-gallery {
-    grid-template-columns: minmax(0, 1fr);
+  .hero-grid {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1.75rem;
+  }
+
+  .hero-gallery.hero-cake-wrapper {
+    position: relative;
+    min-height: 260px;
+  }
+
+  .hero-cake-image {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
   }
 
   .hero-cake-image img {
-    width: 115%;
-    transform: translateX(-8%) translateY(-4%);
+    width: 140%;
+    max-width: none;
+    transform: translateX(-10%) translateY(0%);
   }
 
-  .products-grid {
-    grid-template-columns: minmax(0, 1fr);
+  /* Carrusel: centrado sobre la tarta en mobile */
+  .hero-text-carousel {
+    right: auto;
+    left: 0;
+    justify-content: center;
   }
 
-  .process-grid,
-  .contact-inner {
-    grid-template-columns: minmax(0, 1fr);
+  .hero-text-viewport {
+    transform: translateX(0);
+    width: min(260px, 80vw);
   }
 
-  nav ul {
-    display: none;
+  .hero-text-block {
+    text-align: center;
+  }
+
+  /* Texto principal del hero: centrado y con más aire */
+  .hero-title {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .hero-subtitle,
+  .hero-tags,
+  .hero-actions {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .hero-actions {
+    flex-direction: column;
   }
 }

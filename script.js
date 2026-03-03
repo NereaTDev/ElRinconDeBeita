@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
+  // Asegurar que al recargar la página se vea siempre el inicio (no saltar a secciones)
+  window.scrollTo(0, 0);
+
   // Animación de entrada del hero
   if (window.anime) {
     window.anime
@@ -38,17 +41,32 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Carrusel vertical de textos superpuestos sobre la tarta
-  const heroBlocks = document.querySelectorAll('.hero-text-carousel .hero-text-block');
-  if (heroBlocks.length > 0) {
+  // Carrusel vertical de textos superpuestos sobre la tarta (componente propio)
+  const heroTrack = document.querySelector('.hero-text-track');
+  const heroViewport = document.querySelector('.hero-text-viewport');
+  const heroBlocks = heroTrack ? heroTrack.querySelectorAll('.hero-text-block') : [];
+
+  if (heroTrack && heroViewport && heroBlocks.length > 0) {
     let index = 0;
-    heroBlocks[index].classList.add('is-active');
+
+    const updateLayout = () => {
+      const first = heroBlocks[0];
+      if (!first) return;
+      // Fijamos la altura de la "ventana" al alto del primer bloque
+      heroViewport.style.height = first.offsetHeight + 'px';
+      // Posicionamos el track en el bloque actual
+      heroTrack.style.transform = `translateY(-${index * first.offsetHeight}px)`;
+    };
+
+    // Layout inicial
+    updateLayout();
 
     if (heroBlocks.length > 1) {
+      window.addEventListener('resize', updateLayout);
+
       setInterval(() => {
-        heroBlocks[index].classList.remove('is-active');
         index = (index + 1) % heroBlocks.length;
-        heroBlocks[index].classList.add('is-active');
+        updateLayout();
       }, 4000);
     }
   }
