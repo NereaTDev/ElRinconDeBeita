@@ -177,7 +177,8 @@
           <p class="section-subtitle mt-3 text-sm md:text-base text-slate-600">Una pequeña muestra de tartas, cookies y detalles dulces que he preparado para diferentes celebraciones.</p>
         </div>
 
-        <div class="grid gap-4 md:gap-5 md:grid-cols-3 gallery-track">
+        <div class="relative">
+          <div class="grid gap-4 md:gap-5 md:grid-cols-3 gallery-track">
           <!-- Imagen 1 -->
           <figure class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
             <img src="./assets/Cupcakes de caramelo con glaseado cremoso.png" alt="Cupcakes de caramelo con glaseado cremoso" class="w-full h-56 object-cover" />
@@ -192,6 +193,15 @@
           <figure class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
             <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_54.png" alt="Tarta decorada de El Rincón de Beita" class="w-full h-56 object-cover" />
           </figure>
+          </div>
+
+          <!-- Flechas de navegación solo en desktop -->
+          <button type="button" class="hidden md:flex gallery-arrow gallery-prev items-center justify-center w-9 h-9 rounded-full bg-white/90 border border-slate-200 shadow-sm absolute left-[-1.5rem] top-1/2 -translate-y-1/2 text-slate-500 hover:bg-white">
+            ◀
+          </button>
+          <button type="button" class="hidden md:flex gallery-arrow gallery-next items-center justify-center w-9 h-9 rounded-full bg-white/90 border border-slate-200 shadow-sm absolute right-[-1.5rem] top-1/2 -translate-y-1/2 text-slate-500 hover:bg-white">
+            ▶
+          </button>
         </div>
 
       </div>

@@ -82,6 +82,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
+  // Galería: auto-scroll horizontal y flechas en desktop
+  const galleryTrack = document.querySelector('#galeria .gallery-track');
+  const galleryItems = galleryTrack ? galleryTrack.querySelectorAll('figure') : [];
+  const galleryPrev = document.querySelector('#galeria .gallery-prev');
+  const galleryNext = document.querySelector('#galeria .gallery-next');
+
+  if (galleryTrack && galleryItems.length > 0) {
+    let galleryIndex = 0;
+
+    const updateGallery = () => {
+      const width = galleryTrack.clientWidth;
+      galleryTrack.style.transform = `translateX(-${galleryIndex * width}px)`;
+    };
+
+    // Auto-scroll cada 5 segundos
+    setInterval(() => {
+      galleryIndex = (galleryIndex + 1) % galleryItems.length;
+      updateGallery();
+    }, 5000);
+
+    // Flechas solo en desktop
+    if (galleryPrev && galleryNext) {
+      galleryPrev.addEventListener('click', () => {
+        galleryIndex = (galleryIndex - 1 + galleryItems.length) % galleryItems.length;
+        updateGallery();
+      });
+
+      galleryNext.addEventListener('click', () => {
+        galleryIndex = (galleryIndex + 1) % galleryItems.length;
+        updateGallery();
+      });
+    }
+
+    window.addEventListener('resize', updateGallery);
+    updateGallery();
+  }
+
   // Scroll suave para enlaces internos (nav y CTA hero)
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', function (e) {
