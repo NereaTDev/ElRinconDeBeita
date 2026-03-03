@@ -163,6 +163,8 @@ img {
   width: 135%;
   max-width: none;
   transform: translateX(-20%) translateY(0%);
+  /* Sombra siguiendo el contorno de la tarta, no de la caja */
+  filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.28));
 }
 
 /* Carrusel vertical de textos sobre la tarta */
@@ -202,7 +204,6 @@ img {
 
 .hero-card-text {
   font-size: 0.9rem;
-  color: #4b5563;
 }
 
 /* SECCIONES GENERALES */
@@ -459,6 +460,7 @@ footer {
     width: 125%;
     max-width: none;
     transform: translateX(-10%) translateY(0%);
+    filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.25));
   }
 
   /* Carrusel centrado sobre la tarta, pero con tipografía más grande y clara */
