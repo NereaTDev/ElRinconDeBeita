@@ -416,49 +416,48 @@ footer {
 
 /* Responsive
    Nota: grid y columnas de hero, productos, proceso y contacto ahora las controla Tailwind.
-   En mobile damos un tratamiento distinto al hero con la tarta de fondo.
+   En mobile mantenemos la tarta de fondo pero dejamos más aire y lectura.
 */
 
 @media (max-width: 768px) {
-  /* Hero móvil: tarta grande de fondo, texto centrado encima */
+  /* Hero móvil: más aire arriba/abajo */
   .hero {
-    padding-top: 2.4rem;
-    padding-bottom: 2.4rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .hero-grid {
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 1.75rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.25rem;
   }
 
+  /* Tarta de fondo, centrada, con menos zoom para no "comerse" el texto */
   .hero-gallery.hero-cake-wrapper {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
+    min-height: 260px;
   }
 
-  /* Tarta centrada como bloque visual propio */
   .hero-cake-image {
-    position: static;
-    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
   }
 
   .hero-cake-image img {
-    width: min(360px, 95vw);
-    max-width: 100%;
-    transform: none;
+    width: 125%;
+    max-width: none;
+    transform: translateX(-10%) translateY(0%);
   }
 
-  /* Carrusel: debajo de la tarta, sobre fondo blanco, texto en negro */
+  /* Carrusel centrado sobre la tarta, pero con tipografía más grande y clara */
   .hero-text-carousel {
-    position: static;
-    right: auto;
-    left: auto;
+    right: 0;
+    left: 0;
     justify-content: center;
-    pointer-events: auto;
   }
 
   .hero-text-viewport {
@@ -467,30 +466,49 @@ footer {
   }
 
   .hero-text-block {
-    text-align: left;
-    color: #111827;
-    text-shadow: none;
+    text-align: center;
+    color: #ffffff;
+    text-shadow:
+      0 0 10px rgba(0, 0, 0, 0.7),
+      0 4px 18px rgba(0, 0, 0, 0.85);
   }
 
-  /* Texto principal del hero: centrado y con más aire */
+  .hero-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .hero-card-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #f3f4f6;
+  }
+
+  /* Texto principal del hero: centrado y con más aire entre bloques */
   .hero-title {
     font-size: 1.7rem;
     text-align: center;
+    margin-bottom: 0.9rem;
   }
 
-  .hero-subtitle,
-  .hero-tags,
-  .hero-actions {
+  .hero-subtitle {
     text-align: center;
+    margin-bottom: 1.1rem;
+  }
+
+  .hero-tags {
     justify-content: center;
+    margin-bottom: 1.4rem;
   }
 
   .hero-actions {
     flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
   }
 
   /* Más espacio antes de la sección de productos para que no se "pise" con el hero */
   #productos.section {
-    padding-top: 3rem;
+    padding-top: 3.2rem;
   }
 }
