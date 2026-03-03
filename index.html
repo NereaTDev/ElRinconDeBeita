@@ -77,6 +77,25 @@
       }, { threshold: 0.2 });
 
       document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+      // Scroll suave para enlaces internos (nav y CTA hero)
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function (e) {
+          const targetId = this.getAttribute('href').slice(1);
+          if (!targetId) return;
+          const targetEl = document.getElementById(targetId);
+          if (!targetEl) return;
+          e.preventDefault();
+          const headerOffset = 72; // altura aproximada del header
+          const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
+          const offsetPosition = elementPosition - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        });
+      });
     });
   </script>
 </head>
@@ -127,52 +146,21 @@
           </div>
         </div>
         <div class="hero-gallery hero-cake-wrapper">
-          <!-- Pastel SVG animado -->
-          <div class="hero-cake">
-            <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <linearGradient id="cakeBody" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0" stop-color="#ffe5cf" />
-                  <stop offset="1" stop-color="#f7c39c" />
-                </linearGradient>
-                <linearGradient id="cakeFrosting" x1="0" x2="1" y1="0" y2="1">
-                  <stop offset="0" stop-color="#ffd6ea" />
-                  <stop offset="1" stop-color="#f990b7" />
-                </linearGradient>
-              </defs>
-
-              <!-- plato -->
-              <ellipse cx="80" cy="126" rx="50" ry="8" fill="#f0e4ff" />
-
-              <!-- cuerpo del pastel -->
-              <rect x="35" y="70" width="90" height="40" rx="8" fill="url(#cakeBody)" />
-
-              <!-- frosting -->
-              <path class="cake-frosting" d="M35 70h90v14c0 4-3 7-7 7-4 0-6-3-10-3-4 0-6 3-10 3-4 0-6-3-10-3-4 0-6 3-10 3-4 0-6-3-10-3-4 0-6 3-10 3-4 0-7-3-7-7z" fill="url(#cakeFrosting)" />
-
-              <!-- sprinkles -->
-              <circle class="cake-sprinkle" cx="50" cy="76" r="1.5" fill="#ffb7d3" />
-              <circle class="cake-sprinkle" cx="65" cy="74" r="1.5" fill="#ffe7aa" />
-              <circle class="cake-sprinkle" cx="80" cy="75" r="1.5" fill="#c8e6ff" />
-              <circle class="cake-sprinkle" cx="95" cy="76" r="1.5" fill="#ffb7d3" />
-              <circle class="cake-sprinkle" cx="110" cy="74" r="1.5" fill="#ffe7aa" />
-
-              <!-- vela -->
-              <rect x="76" y="40" width="8" height="28" rx="3" fill="#ffd6ea" />
-              <!-- llama -->
-              <path d="M80 30c4 5 4 9 0 12-4-3-4-7 0-12z" fill="#ffb347" />
-            </svg>
+          <!-- Imagen realista del pastel (sustituye la ruta por tu foto real) -->
+          <div class="hero-cake-image">
+            <img src="assets/cake-hero.png" alt="Tarta decorada de El Rincón de Beita" />
           </div>
 
-          <!-- Tarjetas pequeñas alrededor del pastel -->
-          <article class="hero-card reveal-on-scroll">
-            <span class="hero-card-title">Tartas de celebración</span>
-            <p class="hero-card-text">Bizcochos jugosos, rellenos cremosos y diseños adaptados a tu idea.</p>
-          </article>
-          <article class="hero-card reveal-on-scroll">
-            <span class="hero-card-title">Cookies decoradas</span>
-            <p class="hero-card-text">Galletas personalizadas para detalles, mesas dulces o recuerdos.</p>
-          </article>
+          <!-- Textos flotando sin fondo alrededor de la imagen -->
+          <div class="hero-text-block reveal-on-scroll">
+            <div class="hero-card-title">Tartas de celebración</div>
+            <p class="hero-card-text">Diseños limpios, colores suaves y detalles que encajan con tu estilo y tu evento.</p>
+          </div>
+
+          <div class="hero-text-block reveal-on-scroll">
+            <div class="hero-card-title">Cookies y pequeños detalles</div>
+            <p class="hero-card-text">Galletas decoradas, mini dulces y pequeños regalos dulces para tus invitadas.</p>
+          </div>
         </div>
       </div>
     </section>
