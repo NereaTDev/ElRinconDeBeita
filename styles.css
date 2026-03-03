@@ -393,23 +393,38 @@ textarea:focus {
 
 /* GALERÍA */
 
-#galeria .gallery-track {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.75rem;
-  overflow: hidden;
+.gallery-wrapper {
+  position: relative;
 }
 
-#galeria figure {
+/* Mobile: carrusel horizontal con swipe */
+.tailwind-gallery {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-item {
   flex: 0 0 100%;
   max-width: 100%;
+  scroll-snap-align: center;
 }
 
+/* Desktop: 3 imágenes visibles, sin scroll horizontal */
 @media (min-width: 768px) {
-  /* En desktop mostramos 3 imágenes por "página" */
-  #galeria figure {
-    flex: 0 0 33.3333%;
-    max-width: 33.3333%;
+  .tailwind-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow-x: visible;
+    scroll-snap-type: none;
+  }
+
+  .gallery-item {
+    flex: initial;
+    max-width: none;
+    scroll-snap-align: none;
   }
 }
 
