@@ -192,7 +192,7 @@ img {
 .hero-text-block {
   color: #ffffff;
   text-align: left;
-  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
 }
 
 .hero-card-title {
@@ -476,9 +476,7 @@ footer {
   .hero-text-block {
     text-align: center;
     color: #ffffff;
-    text-shadow:
-      0 0 10px rgba(0, 0, 0, 0.7),
-      0 4px 18px rgba(0, 0, 0, 0.85);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.55);
   }
 
   .hero-card-title {
