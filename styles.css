@@ -280,13 +280,22 @@ img {
   gap: 1rem;
 }
 
+/* Fondo suave cálido para la sección de proceso */
+#proceso.section {
+  background: #FFF9F5;
+}
+
 .step-card {
-  background: var(--card-bg);
+  background: #FFFFFF;
   border-radius: 1rem;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid #FEE7EA;
   padding: 1rem;
   font-size: 0.8rem;
   color: var(--text-muted);
+}
+
+.step-card strong {
+  color: #111827;
 }
 
 .step-badge {
@@ -296,8 +305,8 @@ img {
   width: 1.6rem;
   height: 1.6rem;
   border-radius: 999px;
-  background: #e5edff;
-  color: var(--accent);
+  background: #7A1124;
+  color: #FFF9F5;
   font-size: 0.75rem;
   font-weight: 700;
   margin-bottom: 0.4rem;
