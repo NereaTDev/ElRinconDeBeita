@@ -48,6 +48,13 @@
       }
 
       // Carrusel vertical de textos en el lateral del hero
+      const heroTextCarousel = document.querySelector('.hero-text-carousel');
+      if (heroTextCarousel) {
+        // Empujar el bloque de texto lo máximo posible hacia la derecha sin salir del contenedor
+        heroTextCarousel.style.maxWidth = '16rem';
+        heroTextCarousel.style.marginLeft = 'auto';
+      }
+
       const heroBlocks = document.querySelectorAll('.hero-text-carousel .hero-text-block');
       if (heroBlocks.length > 1) {
         let index = 0;
@@ -57,6 +64,8 @@
           index = (index + 1) % heroBlocks.length;
           heroBlocks[index].classList.add('is-active');
         }, 4000);
+      } else if (heroBlocks.length === 1) {
+        heroBlocks[0].classList.add('is-active');
       }
 
       // Animaciones al hacer scroll en secciones

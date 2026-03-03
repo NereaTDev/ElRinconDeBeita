@@ -6,8 +6,8 @@
   --bg: #f5f5f7;
   --card-bg: #ffffff;
   --border-subtle: #e1e1e6;
-  --accent: #3b82f6; /* azul frío */
-  --accent-soft: #e0edff;
+  --accent: #c90603;
+  --accent-soft: #ff1b1b78;
   --text-main: #111827;
   --text-muted: #6b7280;
 }
@@ -241,8 +241,8 @@ nav a:hover {
   flex-direction: column;
   gap: 0.15rem;
   max-width: 14rem;
-  color: black;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  color: white;
+  text-shadow: 0 2px 10px rgb(0, 0, 0);
 }
 
 .hero-text-block--top {
@@ -323,10 +323,11 @@ nav a:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.15rem 0.55rem;
+  padding: 0.4rem 0.55rem;
   border-radius: 999px;
+  width: fit-content;
   background: var(--accent-soft);
-  color: #1d4ed8;
+  color: white;
 }
 
 /* PROCESO */
