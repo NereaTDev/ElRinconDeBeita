@@ -391,6 +391,28 @@ textarea:focus {
   box-shadow: 0 0 0 1px #c4d4f666;
 }
 
+/* GALERÍA */
+
+#galeria .gallery-track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  overflow: hidden;
+}
+
+#galeria figure {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  /* En desktop mostramos 3 imágenes por "página" */
+  #galeria figure {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+}
+
 /* FOOTER */
 
 footer {
@@ -439,14 +461,6 @@ footer {
 /* Responsive
    En desktop manda Tailwind; en mobile damos layout específico para hero y secciones.
 */
-
-@media(max-width: 1200px){
-
-  .hero-text-viewport {
-    transform: translateX(0%) translateY(200%);
-  }
-}
-
 
 @media (max-width: 768px) {
   /* Hero móvil: más aire arriba/abajo */
@@ -555,19 +569,4 @@ footer {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
   }
-
-  /* Galería: carrusel horizontal en móvil (scroll con el dedo) */
-  #galeria .gallery-track {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 0.75rem;
-    overflow: hidden;
-  }
-
-  #galeria figure {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
 }
-
-/* Desktop: las flechas ya están posicionadas con clases Tailwind en el HTML */

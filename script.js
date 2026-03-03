@@ -91,26 +91,37 @@ document.addEventListener('DOMContentLoaded', function () {
   if (galleryTrack && galleryItems.length > 0) {
     let galleryIndex = 0;
 
+    const getItemsPerPage = () => (window.innerWidth >= 768 ? 3 : 1);
+    const getPagesCount = () => Math.max(1, Math.ceil(galleryItems.length / getItemsPerPage()));
+
+    const clampIndex = () => {
+      const pages = getPagesCount();
+      if (galleryIndex >= pages) galleryIndex = 0;
+      if (galleryIndex < 0) galleryIndex = pages - 1;
+    };
+
     const updateGallery = () => {
+      clampIndex();
       const width = galleryTrack.clientWidth;
       galleryTrack.style.transform = `translateX(-${galleryIndex * width}px)`;
     };
 
     // Auto-scroll cada 5 segundos
     setInterval(() => {
-      galleryIndex = (galleryIndex + 1) % galleryItems.length;
+      const pages = getPagesCount();
+      galleryIndex = (galleryIndex + 1) % pages;
       updateGallery();
     }, 5000);
 
     // Flechas solo en desktop
     if (galleryPrev && galleryNext) {
       galleryPrev.addEventListener('click', () => {
-        galleryIndex = (galleryIndex - 1 + galleryItems.length) % galleryItems.length;
+        galleryIndex -= 1;
         updateGallery();
       });
 
       galleryNext.addEventListener('click', () => {
-        galleryIndex = (galleryIndex + 1) % galleryItems.length;
+        galleryIndex += 1;
         updateGallery();
       });
     }
