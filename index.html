@@ -16,7 +16,7 @@
   <header class="sticky top-0 z-20 bg-[#f9f9fac7] backdrop-blur">
     <div class="max-w-5xl mx-auto px-6 flex items-center justify-between py-2.5">
       <div class="flex items-center gap-2">
-        <img src="./assets/logo-beita.svg" alt="El Rincón de Beita" class="h-9 w-auto" />
+        <img src="./assets/logo-1.png" alt="El Rincón de Beita" class="h-auto w-[200px]" />
       </div>
       <nav class="hidden md:block">
         <ul class="flex items-center gap-5 text-[0.8rem] font-medium text-slate-500">
@@ -179,45 +179,36 @@
           </p>
         </div>
 
-        <!-- Galería: carrusel simple con Tailwind -->
         <div class="gallery-wrapper relative">
-          <div class="gallery-track tailwind-gallery">
-            <!-- Imagen 1 -->
-            <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-              <img src="./assets/Cupcakes de caramelo con glaseado cremoso.png" alt="Cupcakes de caramelo con glaseado cremoso" class="w-full h-56 object-cover" />
-            </figure>
-
-            <!-- Imagen 2 -->
-            <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-              <img src="./assets/Galletas decoradas con colores pasteles.png" alt="Galletas decoradas con colores pasteles" class="w-full h-56 object-cover" />
-            </figure>
-
-            <!-- Imagen 3 -->
-            <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-              <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_54.png" alt="Tarta decorada de El Rincón de Beita" class="w-full h-56 object-cover" />
-            </figure>
-
-            <!-- Imagen 4 -->
-            <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-              <img src="./assets/ChatGPT Image 3 mar 2026, 11_46_01.png" alt="Detalle dulce de El Rincón de Beita" class="w-full h-56 object-cover" />
-            </figure>
-
-            <!-- Imagen 5 -->
-            <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-              <img src="./assets/ChatGPT Image 3 mar 2026, 12_17_11.png" alt="Tarta de celebración de El Rincón de Beita" class="w-full h-56 object-cover" />
-            </figure>
-
-            <!-- Imagen 6 -->
-            <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-              <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_59.png" alt="Mesa dulce de El Rincón de Beita" class="w-full h-56 object-cover" />
-            </figure>
+          <div class="gallery-viewport overflow-hidden">
+            <div class="gallery-track" id="demo-gallery-track">
+              <!-- 6 imágenes -->
+              <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                <img src="./assets/Cupcakes de caramelo con glaseado cremoso.png" alt="Cupcakes de caramelo con glaseado cremoso" class="w-full h-56 object-cover" />
+              </figure>
+              <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                <img src="./assets/Galletas decoradas con colores pasteles.png" alt="Galletas decoradas con colores pasteles" class="w-full h-56 object-cover" />
+              </figure>
+              <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_54.png" alt="Tarta decorada de El Rincón de Beita" class="w-full h-56 object-cover" />
+              </figure>
+              <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                <img src="./assets/ChatGPT Image 3 mar 2026, 11_46_01.png" alt="Detalle dulce de El Rincón de Beita" class="w-full h-56 object-cover" />
+              </figure>
+              <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                <img src="./assets/ChatGPT Image 3 mar 2026, 12_17_11.png" alt="Tarta de celebración de El Rincón de Beita" class="w-full h-56 object-cover" />
+              </figure>
+              <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+                <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_59.png" alt="Mesa dulce de El Rincón de Beita" class="w-full h-56 object-cover" />
+              </figure>
+            </div>
           </div>
 
-          <!-- Flechas solo para desktop -->
-          <button type="button" class="hidden md:flex gallery-prev items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-slate-200 shadow-sm absolute left-[-1.25rem] top-1/2 -translate-y-1/2 text-slate-400 hover:bg-white hover:text-slate-600">
+          <!-- Flechas solo desktop -->
+          <button type="button" class="hidden md:flex gallery-prev items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-slate-200 shadow-sm absolute left-[-1.5rem] top-1/2 -translate-y-1/2 text-slate-400 hover:bg-white hover:text-slate-600">
             ❮
           </button>
-          <button type="button" class="hidden md:flex gallery-next items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-slate-200 shadow-sm absolute right-[-1.25rem] top-1/2 -translate-y-1/2 text-slate-400 hover:bg-white hover:text-slate-600">
+          <button type="button" class="hidden md:flex gallery-next items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-slate-200 shadow-sm absolute right-[-1.5rem] top-1/2 -translate-y-1/2 text-slate-400 hover:bg-white hover:text-slate-600">
             ❯
           </button>
         </div>
@@ -267,9 +258,7 @@
     <div class="footer-inner max-w-5xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[0.75rem] text-slate-500">
       <span>El Rincón de Beita · <span id="footer-year"></span> © Hecho a mano con mucho cariño.</span>
       <div class="footer-links flex items-center gap-2">
-        <a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener" class="hover:text-[#c90603] transition-colors">Instagram</a>
-        <span>·</span>
-        <a href="#contacto" class="hover:text-[#c90603] transition-colors">Contacto</a>
+        <a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener" class="transition-colors">Instagram</a>
       </div>
     </div>
   </footer>

@@ -39,10 +39,7 @@ img {
   padding: 0 1.5rem;
 }
 
-/* HEADER
-   Layout y estilos del header ahora los controla Tailwind en index.html.
-   Se mantiene sólo el comportamiento global de <a> más abajo.
-*/
+/* HEADER */
 
 .btn-primary {
   display: inline-flex;
@@ -152,7 +149,6 @@ img {
   align-items: center;
 }
 
-/* Imagen principal del pastel, en posición absoluta detrás de los textos */
 .hero-cake-image {
   position: absolute;
   pointer-events: none;
@@ -163,11 +159,9 @@ img {
   width: 135%;
   max-width: none;
   transform: translateX(-20%) translateY(0%);
-  /* Sombra siguiendo el contorno de la tarta, no de la caja */
   filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.28));
 }
 
-/* Carrusel vertical de textos sobre la tarta */
 .hero-text-carousel {
   position: absolute;
   top: 0;
@@ -181,8 +175,8 @@ img {
 
 .hero-text-viewport {
   width: 260px;
-  overflow: hidden;           /* sólo se ve un bloque a la vez */
-  transform: translateX(35%) translateY(200%); /* un poco fuera del hero hacia la derecha */
+  overflow: hidden;
+  transform: translateX(35%) translateY(200%);
 }
 
 .hero-text-track {
@@ -249,6 +243,13 @@ img {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  height: 200px;
+  transition: all .7s;
+}
+
+.product-card:hover{
+  border: 1px solid #c90603;
+  transform: scaleX(1.005);
 }
 
 .product-title {
@@ -281,7 +282,6 @@ img {
   gap: 1rem;
 }
 
-/* Fondo creativo para la sección de proceso */
 #proceso.section {
   background: radial-gradient(circle at top left, #FFF9F5 0, #FFF1F3 38%, #FFF9F5 75%);
 }
@@ -325,40 +325,31 @@ img {
   margin-bottom: 0.4rem;
 }
 
-/* GALERÍA */
+/* GALERÍA (componente carrusel) */
 
 .gallery-wrapper {
   position: relative;
 }
 
-/* Mobile: carrusel horizontal con swipe */
-.tailwind-gallery {
+.gallery-viewport {
+  overflow: hidden;
+}
+
+.gallery-track {
   display: flex;
-  gap: 0.75rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
+  gap: 1rem;
+  transition: transform 0.4s ease-out;
 }
 
 .gallery-item {
   flex: 0 0 100%;
   max-width: 100%;
-  scroll-snap-align: center;
 }
 
-/* Desktop: carrusel de 3 en 3 con flechas */
 @media (min-width: 768px) {
-  .tailwind-gallery {
-    display: flex;
-    gap: 1rem;
-    overflow: hidden;
-    scroll-snap-type: none;
-  }
-
   .gallery-item {
     flex: 0 0 33.3333%;
     max-width: 33.3333%;
-    scroll-snap-align: none;
   }
 }
 
@@ -456,10 +447,6 @@ footer {
   color: var(--accent);
 }
 
-.footer-links a:hover {
-  color: #2563eb;
-}
-
 /* REVEAL ON SCROLL */
 
 .reveal-on-scroll {
@@ -473,12 +460,9 @@ footer {
   transform: translateY(0);
 }
 
-/* Responsive
-   En desktop manda Tailwind; en mobile damos layout específico para hero y secciones.
-*/
+/* Responsive */
 
 @media (max-width: 768px) {
-  /* Hero móvil: más aire arriba/abajo */
   .hero {
     padding-top: 3rem;
     padding-bottom: 3rem;
@@ -490,7 +474,6 @@ footer {
     gap: 2.25rem;
   }
 
-  /* Tarta de fondo, centrada, con menos zoom para no "comerse" el texto */
   .hero-gallery.hero-cake-wrapper {
     position: relative;
     min-height: 260px;
@@ -512,7 +495,6 @@ footer {
     filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.25));
   }
 
-  /* Carrusel centrado sobre la tarta, pero con tipografía más grande y clara */
   .hero-text-carousel {
     right: 0;
     left: 0;
@@ -541,7 +523,6 @@ footer {
     color: #f3f4f6;
   }
 
-  /* Texto principal del hero: centrado y con más aire entre bloques */
   .hero-title {
     font-size: 1.7rem;
     text-align: center;
@@ -564,12 +545,10 @@ footer {
     gap: 0.85rem;
   }
 
-  /* Más espacio antes de la sección de productos para que no se "pise" con el hero */
   #productos.section {
     padding-top: 3.2rem;
   }
 
-  /* Productos, proceso y contacto en una sola columna legible */
   .products-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.25rem;

@@ -83,47 +83,55 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
   // Carrusel de galería (3 en desktop, swipe en mobile)
-  const galContainer = document.querySelector('#galeria .gallery-wrapper');
-  const galTrack = galContainer ? galContainer.querySelector('.gallery-track') : null;
-  const galItems = galTrack ? galTrack.querySelectorAll('.gallery-item') : [];
-  const galPrev = galContainer ? galContainer.querySelector('.gallery-prev') : null;
-  const galNext = galContainer ? galContainer.querySelector('.gallery-next') : null;
+  (function () {
+    const wrapper = document.querySelector('#galeria .gallery-wrapper');
+    if (!wrapper) return;
 
-  if (galContainer && galTrack && galItems.length > 0 && galPrev && galNext) {
-    let galPage = 0;
+    const viewport = wrapper.querySelector('.gallery-viewport');
+    const track = wrapper.querySelector('#demo-gallery-track');
+    const items = Array.from(wrapper.querySelectorAll('.gallery-item'));
+    const prevBtn = wrapper.querySelector('.gallery-prev');
+    const nextBtn = wrapper.querySelector('.gallery-next');
+
+    if (!viewport || !track || items.length === 0 || !prevBtn || !nextBtn) return;
+
+    let page = 0;
 
     const isDesktop = () => window.innerWidth >= 768;
-
+    const getItemsPerPage = () => (isDesktop() ? 3 : 1);
     const getPagesCount = () => {
-      if (!isDesktop()) return 0; // en mobile no usamos páginas, solo swipe
-      return Math.max(1, Math.ceil(galItems.length / 3));
+      const perPage = getItemsPerPage();
+      return Math.max(1, Math.ceil(items.length / perPage));
     };
 
-    const updateGallery = () => {
+    const update = () => {
+      const pages = getPagesCount();
       if (!isDesktop()) {
-        galTrack.style.transform = 'translateX(0)';
+        // mobile: sin transform fijo (swipe manual)
+        track.style.transform = 'translateX(0)';
         return;
       }
-      const pages = getPagesCount();
-      if (galPage >= pages) galPage = 0;
-      if (galPage < 0) galPage = pages - 1;
-      const width = galContainer.clientWidth;
-      galTrack.style.transform = `translateX(-${galPage * width}px)`;
+
+      if (page >= pages) page = 0;
+      if (page < 0) page = pages - 1;
+
+      const viewportWidth = viewport.clientWidth;
+      track.style.transform = `translateX(-${page * viewportWidth}px)`;
     };
 
-    galPrev.addEventListener('click', () => {
-      galPage -= 1;
-      updateGallery();
+    prevBtn.addEventListener('click', () => {
+      page -= 1;
+      update();
     });
 
-    galNext.addEventListener('click', () => {
-      galPage += 1;
-      updateGallery();
+    nextBtn.addEventListener('click', () => {
+      page += 1;
+      update();
     });
 
-    window.addEventListener('resize', updateGallery);
-    updateGallery();
-  }
+    window.addEventListener('resize', update);
+    update();
+  })();
 
   // Scroll suave para enlaces internos (nav y CTA hero)
   document.querySelectorAll('a[href^="#"]').forEach(link => {
