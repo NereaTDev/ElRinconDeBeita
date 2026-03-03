@@ -196,13 +196,13 @@ img {
 }
 
 .hero-card-title {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
 .hero-card-text {
-  font-size: 0.85rem;
-  color: #e5e7eb;
+  font-size: 0.9rem;
+  color: #4b5563;
 }
 
 /* SECCIONES GENERALES */
@@ -434,43 +434,47 @@ footer {
 
   .hero-gallery.hero-cake-wrapper {
     position: relative;
-    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
   }
 
+  /* Tarta centrada como bloque visual propio */
   .hero-cake-image {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.85;
+    position: static;
+    pointer-events: none;
   }
 
   .hero-cake-image img {
-    width: 140%;
-    max-width: none;
-    transform: translateX(-10%) translateY(0%);
+    width: min(360px, 95vw);
+    max-width: 100%;
+    transform: none;
   }
 
-  /* Carrusel: centrado sobre la tarta en mobile */
+  /* Carrusel: debajo de la tarta, sobre fondo blanco, texto en negro */
   .hero-text-carousel {
+    position: static;
     right: auto;
-    left: 0;
+    left: auto;
     justify-content: center;
+    pointer-events: auto;
   }
 
   .hero-text-viewport {
-    transform: translateX(0);
-    width: min(260px, 80vw);
+    transform: none;
+    width: min(280px, 90vw);
   }
 
   .hero-text-block {
-    text-align: center;
+    text-align: left;
+    color: #111827;
+    text-shadow: none;
   }
 
   /* Texto principal del hero: centrado y con más aire */
   .hero-title {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     text-align: center;
   }
 
@@ -483,5 +487,10 @@ footer {
 
   .hero-actions {
     flex-direction: column;
+  }
+
+  /* Más espacio antes de la sección de productos para que no se "pise" con el hero */
+  #productos.section {
+    padding-top: 3rem;
   }
 }
