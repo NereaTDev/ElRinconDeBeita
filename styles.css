@@ -415,8 +415,7 @@ footer {
 }
 
 /* Responsive
-   Nota: grid y columnas de hero, productos, proceso y contacto ahora las controla Tailwind.
-   En mobile mantenemos la tarta de fondo pero dejamos más aire y lectura.
+   En desktop manda Tailwind; en mobile damos layout específico para hero y secciones.
 */
 
 @media (max-width: 768px) {
@@ -510,5 +509,21 @@ footer {
   /* Más espacio antes de la sección de productos para que no se "pise" con el hero */
   #productos.section {
     padding-top: 3.2rem;
+  }
+
+  /* Productos, proceso y contacto en una sola columna legible */
+  .products-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+
+  .product-card {
+    padding: 1rem;
+  }
+
+  .process-grid,
+  .contact-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
   }
 }
