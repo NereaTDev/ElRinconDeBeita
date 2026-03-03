@@ -281,18 +281,30 @@ img {
   gap: 1rem;
 }
 
-/* Fondo suave cálido para la sección de proceso */
+/* Fondo creativo para la sección de proceso */
 #proceso.section {
-  background: #FFF9F5;
+  background: radial-gradient(circle at top left, #FFF9F5 0, #FFF1F3 38%, #FFF9F5 75%);
 }
 
 .step-card {
+  position: relative;
   background: #FFFFFF;
-  border-radius: 1rem;
+  border-radius: 1.1rem;
   border: 1px solid #FEE7EA;
-  padding: 1rem;
+  padding: 1.05rem 1rem 1.15rem 1rem;
   font-size: 0.8rem;
   color: var(--text-muted);
+  box-shadow: 0 10px 30px rgba(201, 6, 3, 0.04);
+}
+
+.step-card::before {
+  content: "";
+  position: absolute;
+  inset-inline: 1rem;
+  top: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #C90603, #F97373);
 }
 
 .step-card strong {
@@ -311,6 +323,7 @@ img {
   font-size: 0.75rem;
   font-weight: 700;
   margin-bottom: 0.4rem;
+  box-shadow: 0 6px 16px rgba(122, 17, 36, 0.32);
 }
 
 /* CONTACTO */
