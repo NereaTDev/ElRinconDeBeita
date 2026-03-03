@@ -35,26 +35,6 @@
           delay: anime.stagger(60)
         }, '-=200');
 
-      // Pastel SVG: animación de frosting "palpitando" y sprinkles flotando
-      anime({
-        targets: '.cake-frosting',
-        translateY: [0, -2],
-        direction: 'alternate',
-        loop: true,
-        easing: 'easeInOutSine',
-        duration: 1400
-      });
-
-      anime({
-        targets: '.cake-sprinkle',
-        translateY: [0, -4],
-        opacity: [0.6, 1],
-        delay: anime.stagger(120),
-        direction: 'alternate',
-        loop: true,
-        easing: 'easeInOutSine',
-        duration: 1100
-      });
 
       // Efecto parallax suave en el pastel al hacer scroll
       const cakeWrapper = document.querySelector('.hero-cake-wrapper');
@@ -65,6 +45,18 @@
           const visible = 1 - Math.min(Math.max(rect.top / vh, 0), 1);
           cakeWrapper.style.transform = `translateY(${(1 - visible) * 15}px)`;
         });
+      }
+
+      // Carrusel vertical de textos en el lateral del hero
+      const heroBlocks = document.querySelectorAll('.hero-text-carousel .hero-text-block');
+      if (heroBlocks.length > 1) {
+        let index = 0;
+        heroBlocks[index].classList.add('is-active');
+        setInterval(() => {
+          heroBlocks[index].classList.remove('is-active');
+          index = (index + 1) % heroBlocks.length;
+          heroBlocks[index].classList.add('is-active');
+        }, 4000);
       }
 
       // Animaciones al hacer scroll en secciones
@@ -146,20 +138,22 @@
           </div>
         </div>
         <div class="hero-gallery hero-cake-wrapper">
-          <!-- Imagen realista del pastel (sustituye la ruta por tu foto real) -->
+          <!-- Imagen realista del pastel -->
           <div class="hero-cake-image">
             <img src="assets/cake-hero.png" alt="Tarta decorada de El Rincón de Beita" />
           </div>
 
-          <!-- Textos flotando sin fondo alrededor de la imagen -->
-          <div class="hero-text-block reveal-on-scroll">
-            <div class="hero-card-title">Tartas de celebración</div>
-            <p class="hero-card-text">Diseños limpios, colores suaves y detalles que encajan con tu estilo y tu evento.</p>
-          </div>
+          <!-- Carrusel vertical de textos en el lateral derecho -->
+          <div class="hero-text-carousel">
+            <div class="hero-text-block reveal-on-scroll">
+              <div class="hero-card-title">Tartas de celebración</div>
+              <p class="hero-card-text">Diseños limpios, colores suaves y detalles que encajan con tu estilo y tu evento.</p>
+            </div>
 
-          <div class="hero-text-block reveal-on-scroll">
-            <div class="hero-card-title">Cookies y pequeños detalles</div>
-            <p class="hero-card-text">Galletas decoradas, mini dulces y pequeños regalos dulces para tus invitadas.</p>
+            <div class="hero-text-block reveal-on-scroll">
+              <div class="hero-card-title">Cookies y pequeños detalles</div>
+              <p class="hero-card-text">Galletas decoradas, mini dulces y pequeños regalos dulces para tus invitadas.</p>
+            </div>
           </div>
         </div>
       </div>
