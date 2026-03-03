@@ -325,6 +325,43 @@ img {
   margin-bottom: 0.4rem;
 }
 
+/* GALERÍA */
+
+.gallery-wrapper {
+  position: relative;
+}
+
+/* Mobile: carrusel horizontal con swipe */
+.tailwind-gallery {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gallery-item {
+  flex: 0 0 100%;
+  max-width: 100%;
+  scroll-snap-align: center;
+}
+
+/* Desktop: carrusel de 3 en 3 con flechas */
+@media (min-width: 768px) {
+  .tailwind-gallery {
+    display: flex;
+    gap: 1rem;
+    overflow: hidden;
+    scroll-snap-type: none;
+  }
+
+  .gallery-item {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+    scroll-snap-align: none;
+  }
+}
+
 /* CONTACTO */
 
 .contact {
@@ -389,43 +426,6 @@ textarea:focus {
   outline: none;
   border-color: #c4d4f6;
   box-shadow: 0 0 0 1px #c4d4f666;
-}
-
-/* GALERÍA */
-
-.gallery-wrapper {
-  position: relative;
-}
-
-/* Mobile: carrusel horizontal con swipe */
-.tailwind-gallery {
-  display: flex;
-  gap: 0.75rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-.gallery-item {
-  flex: 0 0 100%;
-  max-width: 100%;
-  scroll-snap-align: center;
-}
-
-/* Desktop: 3 imágenes visibles, sin scroll horizontal */
-@media (min-width: 768px) {
-  .tailwind-gallery {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    overflow-x: visible;
-    scroll-snap-type: none;
-  }
-
-  .gallery-item {
-    flex: initial;
-    max-width: none;
-    scroll-snap-align: none;
-  }
 }
 
 /* FOOTER */

@@ -82,6 +82,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
+  // Carrusel de galería (3 en desktop, swipe en mobile)
+  const galContainer = document.querySelector('#galeria .gallery-wrapper');
+  const galTrack = galContainer ? galContainer.querySelector('.gallery-track') : null;
+  const galItems = galTrack ? galTrack.querySelectorAll('.gallery-item') : [];
+  const galPrev = galContainer ? galContainer.querySelector('.gallery-prev') : null;
+  const galNext = galContainer ? galContainer.querySelector('.gallery-next') : null;
+
+  if (galContainer && galTrack && galItems.length > 0 && galPrev && galNext) {
+    let galPage = 0;
+
+    const isDesktop = () => window.innerWidth >= 768;
+
+    const getPagesCount = () => {
+      if (!isDesktop()) return 0; // en mobile no usamos páginas, solo swipe
+      return Math.max(1, Math.ceil(galItems.length / 3));
+    };
+
+    const updateGallery = () => {
+      if (!isDesktop()) {
+        galTrack.style.transform = 'translateX(0)';
+        return;
+      }
+      const pages = getPagesCount();
+      if (galPage >= pages) galPage = 0;
+      if (galPage < 0) galPage = pages - 1;
+      const width = galContainer.clientWidth;
+      galTrack.style.transform = `translateX(-${galPage * width}px)`;
+    };
+
+    galPrev.addEventListener('click', () => {
+      galPage -= 1;
+      updateGallery();
+    });
+
+    galNext.addEventListener('click', () => {
+      galPage += 1;
+      updateGallery();
+    });
+
+    window.addEventListener('resize', updateGallery);
+    updateGallery();
+  }
+
   // Scroll suave para enlaces internos (nav y CTA hero)
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', function (e) {

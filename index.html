@@ -180,7 +180,7 @@
         </div>
 
         <!-- Galería: carrusel simple con Tailwind -->
-        <div class="gallery-wrapper">
+        <div class="gallery-wrapper relative">
           <div class="gallery-track tailwind-gallery">
             <!-- Imagen 1 -->
             <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
@@ -212,6 +212,14 @@
               <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_59.png" alt="Mesa dulce de El Rincón de Beita" class="w-full h-56 object-cover" />
             </figure>
           </div>
+
+          <!-- Flechas solo para desktop -->
+          <button type="button" class="hidden md:flex gallery-prev items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-slate-200 shadow-sm absolute left-[-1.25rem] top-1/2 -translate-y-1/2 text-slate-400 hover:bg-white hover:text-slate-600">
+            ❮
+          </button>
+          <button type="button" class="hidden md:flex gallery-next items-center justify-center w-8 h-8 rounded-full bg-white/90 border border-slate-200 shadow-sm absolute right-[-1.25rem] top-1/2 -translate-y-1/2 text-slate-400 hover:bg-white hover:text-slate-600">
+            ❯
+          </button>
         </div>
 
       </div>
