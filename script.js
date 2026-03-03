@@ -82,6 +82,34 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
+  // Controles de la galería en móvil (botones anterior/siguiente)
+  const galleryTrack = document.querySelector('#galeria .gallery-track');
+  const galleryItems = galleryTrack ? galleryTrack.querySelectorAll('figure') : [];
+  const prevBtn = document.querySelector('#galeria .gallery-prev');
+  const nextBtn = document.querySelector('#galeria .gallery-next');
+
+  if (galleryTrack && galleryItems.length > 0 && prevBtn && nextBtn) {
+    let galleryIndex = 0;
+
+    const updateGallery = () => {
+      const width = galleryTrack.clientWidth;
+      galleryTrack.style.transform = `translateX(-${galleryIndex * width}px)`;
+    };
+
+    prevBtn.addEventListener('click', () => {
+      galleryIndex = (galleryIndex - 1 + galleryItems.length) % galleryItems.length;
+      updateGallery();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      galleryIndex = (galleryIndex + 1) % galleryItems.length;
+      updateGallery();
+    });
+
+    window.addEventListener('resize', updateGallery);
+    updateGallery();
+  }
+
   // Scroll suave para enlaces internos (nav y CTA hero)
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', function (e) {

@@ -177,21 +177,31 @@
           <p class="section-subtitle mt-3 text-sm md:text-base text-slate-600">Una pequeña muestra de tartas, cookies y detalles dulces que he preparado para diferentes celebraciones.</p>
         </div>
 
-        <div class="grid gap-4 md:gap-5 md:grid-cols-3">
+        <div class="grid gap-4 md:gap-5 md:grid-cols-3 gallery-track">
           <!-- Imagen 1 -->
           <figure class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
             <img src="./assets/gallery-1.jpg" alt="Tarta decorada de El Rincón de Beita" class="w-full h-56 object-cover" />
           </figure>
 
           <!-- Imagen 2 -->
-          <figure class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 hidden md:block">
+          <figure class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
             <img src="./assets/gallery-2.jpg" alt="Detalle dulce de El Rincón de Beita" class="w-full h-56 object-cover" />
           </figure>
 
           <!-- Imagen 3 -->
-          <figure class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 hidden md:block">
+          <figure class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
             <img src="./assets/gallery-3.jpg" alt="Mesa dulce de El Rincón de Beita" class="w-full h-56 object-cover" />
           </figure>
+        </div>
+
+        <!-- Controles de galería en móvil -->
+        <div class="flex items-center justify-center gap-3 mt-4 md:hidden">
+          <button type="button" class="inline-flex items-center justify-center px-3 py-1.5 rounded-full border border-slate-300 text-xs font-medium text-slate-700 bg-white/80 hover:bg-white gallery-prev">
+            ◀ Anterior
+          </button>
+          <button type="button" class="inline-flex items-center justify-center px-3 py-1.5 rounded-full border border-slate-300 text-xs font-medium text-slate-700 bg-white/80 hover:bg-white gallery-next">
+            Siguiente ▶
+          </button>
         </div>
       </div>
     </section>
