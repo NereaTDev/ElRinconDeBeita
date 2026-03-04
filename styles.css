@@ -369,6 +369,12 @@ img {
 .gallery-item {
   flex: 0 0 100%;
   max-width: 100%;
+  /* Fixed card height to align rows and center images nicely */
+  height: 260px; /* tweak this if you want taller/shorter cards */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) {
@@ -378,7 +384,7 @@ img {
 
   .gallery-item {
     flex: 0 0 33.3333%;
-    max-width: 33.3333%;
+    max-width: 32%;
   }
 }
 
