@@ -53,26 +53,28 @@ document.addEventListener('DOMContentLoaded', function () {
     const updateLayout = () => {
       if (!heroBlocks.length) return;
 
-      // Calculamos la altura máxima de todos los bloques para que ninguno se corte
-      slideHeight = Array.from(heroBlocks).reduce((max, block) => {
-        const h = block.offsetHeight;
-        return h > max ? h : max;
-      }, 0);
+      // Calculamos la altura máxima natural SOLO la primera vez (para que no "crezca" en cada ciclo)
+      if (!slideHeight) {
+        const naturalMax = Array.from(heroBlocks).reduce((max, block) => {
+          const h = block.scrollHeight || block.offsetHeight || 0;
+          return h > max ? h : max;
+        }, 0);
 
-      if (!slideHeight) return;
+        if (!naturalMax) return;
 
-      // Forzamos que todos los bloques tengan exactamente esa altura
-      // para que no se solapen visualmente al hacer el translateY
-      heroBlocks.forEach(block => {
-        block.style.height = `${slideHeight}px`;
-        block.style.display = 'flex';
-        block.style.flexDirection = 'column';
-        block.style.justifyContent = 'center';
-      });
+        // Damos un poco de aire extra y usamos esa altura fija para TODOS los slides
+        slideHeight = naturalMax + 12; // ajusta 12px si quieres más o menos padding vertical
 
-      // Fijamos la altura de la "ventana" a un pelín más que el alto máximo detectado
-      const viewportHeight = slideHeight + 5; // ajusta 12px si quieres más o menos aire
-      heroViewport.style.height = `${viewportHeight}px`;
+        heroBlocks.forEach(block => {
+          block.style.height = `${slideHeight}px`;
+          block.style.display = 'flex';
+          block.style.flexDirection = 'column';
+          block.style.justifyContent = 'center';
+        });
+
+        // El viewport tiene exactamente la altura del slide para no mostrar restos de otros
+        heroViewport.style.height = `${slideHeight}px`;
+      }
 
       // Posicionamos el track en el bloque actual usando la altura del slide
       heroTrack.style.transform = `translateY(-${index * slideHeight}px)`;
