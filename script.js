@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const imageEl = document.createElement('img');
           imageEl.src = img.src;
           imageEl.alt = img.alt || '';
-          imageEl.className = 'w-full h-56 object-contain md:object-cover';
+          imageEl.className = 'w-[88%] h-56 object-contain md:object-cover';
 
           figure.appendChild(imageEl);
           track.appendChild(figure);
