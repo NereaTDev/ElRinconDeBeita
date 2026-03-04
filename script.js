@@ -169,13 +169,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const viewport = wrapper.querySelector('.gallery-viewport');
     const track = wrapper.querySelector('#demo-gallery-track');
-    const items = Array.from(wrapper.querySelectorAll('.gallery-item'));
     const prevBtn = wrapper.querySelector('.gallery-prev');
     const nextBtn = wrapper.querySelector('.gallery-next');
 
-    if (!viewport || !track || items.length === 0 || !prevBtn || !nextBtn) return;
+    if (!viewport || !track || !prevBtn || !nextBtn) return;
 
-    let page = 0;
+    // Cargamos la lista de imágenes generada por tools/generate-gallery.js
+    fetch('./assets/gallery/index.json')
+      .then(response => {
+        if (!response.ok) throw new Error('No se pudo cargar index.json de la galería');
+        return response.json();
+      })
+      .then(galleryImages => {
+        if (!Array.isArray(galleryImages) || galleryImages.length === 0) return;
+
+        // Limpiamos el track y generamos las figuras en base a ese JSON
+        track.innerHTML = '';
+        galleryImages.forEach(img => {
+          const figure = document.createElement('figure');
+          figure.className = 'gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50';
+
+          const imageEl = document.createElement('img');
+          imageEl.src = img.src;
+          imageEl.alt = img.alt || '';
+          imageEl.className = 'w-full h-56 object-contain md:object-cover';
+
+          figure.appendChild(imageEl);
+          track.appendChild(figure);
+        });
+
+        const items = Array.from(track.querySelectorAll('.gallery-item'));
+        if (!items.length) return;
+
+        let page = 0;
 
     const isDesktop = () => window.innerWidth >= 768;
     const getItemsPerPage = () => (isDesktop() ? 3 : 1);
@@ -211,6 +237,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('resize', update);
     update();
+  })
+  .catch(err => {
+    console.error('Error inicializando la galería:', err);
+  });
   })();
 
   // Scroll suave para enlaces internos (nav y CTA hero)
