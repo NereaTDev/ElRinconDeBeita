@@ -70,10 +70,11 @@ document.addEventListener('DOMContentLoaded', function () {
         block.style.justifyContent = 'center';
       });
 
-      // Fijamos la altura de la "ventana" al alto máximo detectado
-      heroViewport.style.height = `${slideHeight}px`;
+      // Fijamos la altura de la "ventana" a un pelín más que el alto máximo detectado
+      const viewportHeight = slideHeight + 5; // ajusta 12px si quieres más o menos aire
+      heroViewport.style.height = `${viewportHeight}px`;
 
-      // Posicionamos el track en el bloque actual usando esa altura fija
+      // Posicionamos el track en el bloque actual usando la altura del slide
       heroTrack.style.transform = `translateY(-${index * slideHeight}px)`;
     };
 
