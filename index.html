@@ -15,8 +15,8 @@
 <body class="text-slate-900 font-sans">
   <header class="sticky top-0 z-20 bg-[#f9f9fac7] backdrop-blur">
     <div class="max-w-5xl mx-auto px-6 flex items-center justify-between py-2.5">
-      <div class="flex items-center gap-2">
-        <img src="./assets/logo-1.png" alt="El Rincón de Beita" class="h-auto w-[200px]" />
+      <div class="flex items-center gap-2 w-full justify-center md:w-fit">
+        <img src="./assets/logo-1.png" alt="El Rincón de Beita" class="h-auto w-[300px] md:w-[200px]" />
       </div>
       <nav class="hidden md:block">
         <ul class="flex items-center gap-5 text-[0.8rem] font-medium text-slate-500">
@@ -34,16 +34,16 @@
     </div>
   </header>
 
-  <main>
+  <main class="max-md:flex flex-col justify-between max-md:gap-14">
     <!-- HERO -->
-    <section class="hero py-12 md:py-16 md:mt-6">
+    <section class="hero py-16 md:py-16 md:mt-6">
       <div class="max-w-5xl mx-auto md:py-14 px-6 grid gap-10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-center hero-grid">
         <div>
-          <h1 class="hero-title text-2xl md:text-5xl font-semibold leading-snug text-slate-900 w-[36rem]">
+          <h1 class="hero-title text-2xl md:text-5xl p-4 md:p-0 font-semibold leading-snug text-slate-900 md:w-[36rem]">
             Pasteles y detalles <span class="hero-highlight text-[#c90603]">hechos a mano</span>
             para momentos que se recuerdan.
           </h1>
-          <p class="hero-subtitle mt-4 text-sm md:text-[1.1rem] text-slate-600 max-w-[32rem]">
+          <p class="hero-subtitle mt-4  p-4 md:p-0 text-sm md:text-[1.1rem] text-slate-600 md:max-w-[32rem]">
             En El Rincón de Beita creo tartas personalizadas, cookies decoradas y pequeños
             detalles dulces para cumpleaños, comuniones, bautizos y todo lo que te apetezca celebrar.
           </p>
@@ -53,14 +53,14 @@
             <span class="tag text-[0.7rem] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">Mesas dulces</span>
             <span class="tag text-[0.7rem] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">Pedidos a medida</span>
           </div>
-          <div class="hero-actions mt-6 flex flex-col sm:flex-row sm:items-center gap-3">
+          <div class="hero-actions mt-6 flex flex-col sm:flex-row sm:items-center max-md:justify-center gap-3">
             <a href="#contacto" class="btn-primary inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#c90603] text-white text-sm font-medium shadow-sm hover:bg-red-700 transition-colors">
               Quiero pedir un presupuesto
             </a>
             <a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener" class="btn-secondary inline-flex items-center justify-center px-4 py-2 rounded-full border border-slate-300 text-slate-700 text-sm font-medium bg-white/70 hover:bg-white transition-colors">
               Ver trabajos en Instagram
             </a>
-            <span class="hero-note text-[0.7rem] text-slate-500">
+            <span class="hero-note text-[0.7rem] text-slate-500 max-md:hidden">
               Respondo personalmente cada mensaje :)
             </span>
           </div>
@@ -92,7 +92,7 @@
     </section>
 
     <!-- PRODUCTOS -->
-    <section class="section py-12 md:py-16" id="productos">
+    <section class="section py-12 md:py-16 mt-8 md:mt-0" id="productos">
       <div class="max-w-5xl mx-auto px-6 reveal-on-scroll">
         <div class="section-header text-center max-w-2xl mx-auto">
           <p class="section-kicker text-[0.75rem] font-semibold tracking-[0.18em] uppercase text-slate-500">Qué puedo preparar para ti</p>
@@ -180,26 +180,26 @@
         </div>
 
         <div class="gallery-wrapper relative">
-          <div class="gallery-viewport overflow-hidden">
+          <div class="gallery-viewport">
             <div class="gallery-track" id="demo-gallery-track">
               <!-- 6 imágenes -->
               <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-                <img src="./assets/Cupcakes de caramelo con glaseado cremoso.png" alt="Cupcakes de caramelo con glaseado cremoso" class="w-full h-56 object-cover" />
+                <img src="./assets/Cupcakes de caramelo con glaseado cremoso.png" alt="Cupcakes de caramelo con glaseado cremoso" class="w-full h-56 object-contain md:object-cover" />
               </figure>
               <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-                <img src="./assets/Galletas decoradas con colores pasteles.png" alt="Galletas decoradas con colores pasteles" class="w-full h-56 object-cover" />
+                <img src="./assets/Galletas decoradas con colores pasteles.png" alt="Galletas decoradas con colores pasteles" class="w-full h-56 object-contain md:object-cover" />
               </figure>
               <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-                <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_54.png" alt="Tarta decorada de El Rincón de Beita" class="w-full h-56 object-cover" />
+                <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_54.png" alt="Tarta decorada de El Rincón de Beita" class="w-full h-56 object-contain md:object-cover" />
               </figure>
               <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-                <img src="./assets/ChatGPT Image 3 mar 2026, 11_46_01.png" alt="Detalle dulce de El Rincón de Beita" class="w-full h-56 object-cover" />
+                <img src="./assets/ChatGPT Image 3 mar 2026, 11_46_01.png" alt="Detalle dulce de El Rincón de Beita" class="w-full h-56 object-contain md:object-cover" />
               </figure>
               <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-                <img src="./assets/ChatGPT Image 3 mar 2026, 12_17_11.png" alt="Tarta de celebración de El Rincón de Beita" class="w-full h-56 object-cover" />
+                <img src="./assets/ChatGPT Image 3 mar 2026, 12_17_11.png" alt="Tarta de celebración de El Rincón de Beita" class="w-full h-56 object-contain md:object-cover" />
               </figure>
               <figure class="gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
-                <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_59.png" alt="Mesa dulce de El Rincón de Beita" class="w-full h-56 object-cover" />
+                <img src="./assets/ChatGPT Image 3 mar 2026, 15_04_59.png" alt="Mesa dulce de El Rincón de Beita" class="w-full h-56 object-contain md:object-cover" />
               </figure>
             </div>
           </div>

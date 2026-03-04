@@ -48,14 +48,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (heroTrack && heroViewport && heroBlocks.length > 0) {
     let index = 0;
+    let slideHeight = 0;
 
     const updateLayout = () => {
-      const first = heroBlocks[0];
-      if (!first) return;
-      // Fijamos la altura de la "ventana" al alto del primer bloque
-      heroViewport.style.height = first.offsetHeight + 'px';
-      // Posicionamos el track en el bloque actual
-      heroTrack.style.transform = `translateY(-${index * first.offsetHeight}px)`;
+      if (!heroBlocks.length) return;
+
+      // Calculamos la altura máxima de todos los bloques para que ninguno se corte
+      slideHeight = Array.from(heroBlocks).reduce((max, block) => {
+        const h = block.offsetHeight;
+        return h > max ? h : max;
+      }, 0);
+
+      if (!slideHeight) return;
+
+      // Forzamos que todos los bloques tengan exactamente esa altura
+      // para que no se solapen visualmente al hacer el translateY
+      heroBlocks.forEach(block => {
+        block.style.height = `${slideHeight}px`;
+        block.style.display = 'flex';
+        block.style.flexDirection = 'column';
+        block.style.justifyContent = 'center';
+      });
+
+      // Fijamos la altura de la "ventana" al alto máximo detectado
+      heroViewport.style.height = `${slideHeight}px`;
+
+      // Posicionamos el track en el bloque actual usando esa altura fija
+      heroTrack.style.transform = `translateY(-${index * slideHeight}px)`;
     };
 
     // Layout inicial
