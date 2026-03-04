@@ -571,6 +571,39 @@ footer {
     padding: 1rem;
   }
 
+  /* Modo "abanico" de productos en mobile */
+  #productos .product-card {
+    position: relative;
+    overflow: hidden;
+    max-height: 3.2rem; /* solo título visible */
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    transition: max-height 0.35s ease, padding 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  }
+
+  #productos .product-card .product-text,
+  #productos .product-card .badge {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+    transition: opacity 0.25s ease, max-height 0.25s ease, margin-top 0.25s ease;
+  }
+
+  #productos .product-card.is-active {
+    max-height: 260px; /* suficiente para texto + badge */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transform: translateX(-4px);
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+  }
+
+  #productos .product-card.is-active .product-text,
+  #productos .product-card.is-active .badge {
+    opacity: 1;
+    max-height: 200px;
+    margin-top: 0.4rem;
+  }
+
   .process-grid,
   .contact-inner {
     grid-template-columns: minmax(0, 1fr);

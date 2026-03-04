@@ -101,6 +101,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
+  // "Abanico" de productos en mobile: solo la card centrada en pantalla se despliega
+  (function () {
+    const cards = Array.from(document.querySelectorAll('#productos .product-card'));
+    if (!cards.length) return;
+
+    const isMobile = () => window.innerWidth <= 768;
+
+    const updateActiveCard = () => {
+      if (!isMobile()) {
+        cards.forEach(card => card.classList.remove('is-active'));
+        return;
+      }
+
+      const viewportCenter = window.innerHeight / 2;
+      let bestCard = null;
+      let bestDistance = Infinity;
+
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(cardCenter - viewportCenter);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestCard = card;
+        }
+      });
+
+      if (!bestCard) return;
+      cards.forEach(card => card.classList.toggle('is-active', card === bestCard));
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (!isMobile()) return;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveCard();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateActiveCard);
+
+    // Estado inicial
+    updateActiveCard();
+  })();
+
   // Carrusel de galería (3 en desktop, swipe en mobile)
   (function () {
     const wrapper = document.querySelector('#galeria .gallery-wrapper');
