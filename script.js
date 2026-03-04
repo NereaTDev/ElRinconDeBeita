@@ -27,7 +27,15 @@ document.addEventListener('DOMContentLoaded', function () {
         opacity: [0, 1],
         translateY: [10, 0],
         delay: window.anime.stagger(60)
-      }, '-=200');
+      }, '-=200')
+      .add({
+        // Aparición suave del cuadro del carrusel para integrarse con el resto del hero
+        // Sin tocar la posición final: solo opacidad y una ligera escala
+        targets: '.hero-text-viewport',
+        opacity: [0, 1],
+        scale: [0.96, 1],
+        duration: 500
+      }, '-=350');
   }
 
   // Efecto parallax suave en el pastel al hacer scroll

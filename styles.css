@@ -170,6 +170,7 @@ img {
   align-items: center;
   justify-content: flex-end;
   pointer-events: none;
+  transform: translateY(185px) translateX(100px);
 }
 
 .hero-text-viewport {
@@ -256,12 +257,20 @@ img {
   transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out, background-color 0.18s ease-out;
 }
 
+@media (max-width: 1200px) {
+  .hero-text-carousel {
+    transform: translateY(175px) translateX(10px);
+  }
+}
+
 @media (min-width: 769px) {
+
   /* Hover suave de las cards de "Qué puedo preparar para ti" solo en desktop */
   #productos .product-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
-    border-color: rgba(248, 113, 113, 0.65); /* rojo suave */
+    border-color: rgba(248, 113, 113, 0.65);
+    /* rojo suave */
     background-color: #ffffff;
   }
 }
@@ -500,7 +509,7 @@ footer {
 
   .hero-gallery.hero-cake-wrapper {
     position: relative;
-    min-height: 80px;
+    min-height: 235px;
   }
 
   .hero-cake-image {
@@ -519,20 +528,24 @@ footer {
     filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.25));
   }
 
-
-  
   .hero-text-carousel {
     right: 0;
     left: 0;
     justify-content: end;
-    top: 150%;
+    top: 100%;
     align-items: initial;
+    transform: none;
   }
 
   .hero-text-viewport {
     transform: none;
-    width: min(280px, 90vw);
-    padding: 0.6rem 0.9rem; /* un poco más de aire en mobile */
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    width: min(315px, 90vw);
+    padding: 0.6rem 0.9rem;
+    /* un poco más de aire en mobile */
   }
 
   .hero-text-block {
@@ -545,12 +558,13 @@ footer {
     display: inline-block;
     padding: 0.25rem 0.6rem;
     border-radius: 999px;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     color: #fff;
     font-size: 1rem;
     font-weight: 700;
     width: fit-content;
-    margin-left: auto; /* alinear la píldora del título a la derecha solo en mobile */
+    margin-left: auto;
+    /* alinear la píldora del título a la derecha solo en mobile */
   }
 
   .hero-card-text {
@@ -598,7 +612,8 @@ footer {
   #productos .product-card {
     position: relative;
     overflow: hidden;
-    max-height: 3.2rem; /* solo título visible */
+    max-height: 3.2rem;
+    /* solo título visible */
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
     transition: max-height 0.35s ease, padding 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
@@ -613,7 +628,8 @@ footer {
   }
 
   #productos .product-card.is-active {
-    max-height: 260px; /* suficiente para texto + badge */
+    max-height: 260px;
+    /* suficiente para texto + badge */
     padding-top: 1rem;
     padding-bottom: 1rem;
     transform: translateX(-4px);
