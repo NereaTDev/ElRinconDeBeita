@@ -1,0 +1,8 @@
+{
+  "name": "el-rincon-de-beita",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve . --listen 3001 --no-clipboard"
+  }
+}

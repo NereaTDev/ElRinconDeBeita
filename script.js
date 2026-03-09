@@ -183,11 +183,46 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(galleryImages => {
         if (!Array.isArray(galleryImages) || galleryImages.length === 0) return;
 
+        // Elementos del modal de imagen
+        const modal = document.getElementById('gallery-modal');
+        const modalImg = document.getElementById('gallery-modal-image');
+        const modalCaption = document.getElementById('gallery-modal-caption');
+        const modalClose = document.getElementById('gallery-modal-close');
+
+        const openModal = (src, alt) => {
+          if (!modal || !modalImg) return;
+          modalImg.src = src;
+          modalImg.alt = alt || '';
+          if (modalCaption) {
+            modalCaption.textContent = alt || '';
+          }
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        };
+
+        const closeModal = () => {
+          if (!modal) return;
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        };
+
+        if (modalClose) {
+          modalClose.addEventListener('click', closeModal);
+        }
+        if (modal) {
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+          });
+        }
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') closeModal();
+        });
+
         // Limpiamos el track y generamos las figuras en base a ese JSON
         track.innerHTML = '';
         galleryImages.forEach(img => {
           const figure = document.createElement('figure');
-          figure.className = 'gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50';
+          figure.className = 'gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 cursor-pointer';
 
           const imageEl = document.createElement('img');
           imageEl.src = img.src;
@@ -195,6 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
           imageEl.className = 'w-[88%] h-56 object-contain md:object-cover';
 
           figure.appendChild(imageEl);
+          figure.addEventListener('click', () => openModal(imageEl.src, imageEl.alt));
           track.appendChild(figure);
         });
 
@@ -241,6 +277,57 @@ document.addEventListener('DOMContentLoaded', function () {
   .catch(err => {
     console.error('Error inicializando la galería:', err);
   });
+  })();
+
+  // Formulario de contacto — envío AJAX vía Web3Forms (sin backend, sin redirección)
+  (function () {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    const submitBtn = document.getElementById('contact-submit');
+    const successMsg = document.getElementById('contact-success');
+    const errorMsg = document.getElementById('contact-error');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      // Validación nativa del navegador
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      // Ocultar mensajes anteriores
+      successMsg.classList.add('hidden');
+      errorMsg.classList.add('hidden');
+
+      // Estado de carga en el botón
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando…';
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          successMsg.classList.remove('hidden');
+          form.reset();
+        } else {
+          errorMsg.classList.remove('hidden');
+        }
+      } catch (_) {
+        errorMsg.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
   })();
 
   // Scroll suave para enlaces internos (nav y CTA hero)
