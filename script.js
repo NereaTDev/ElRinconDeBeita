@@ -307,15 +307,23 @@ document.addEventListener('DOMContentLoaded', function () {
       submitBtn.textContent = 'Enviando…';
 
       try {
-        const res = await fetch('https://api.web3forms.com/submit', {
+        const payload = {
+          Nombre: form.Nombre.value,
+          Email: form.Email.value,
+          Mensaje: form.Mensaje.value,
+        };
+
+        const res = await fetch('/api/contact', {
           method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: new FormData(form),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
         });
 
-        const data = await res.json();
+        const data = await res.json().catch(() => null);
 
-        if (res.ok && data.success) {
+        if (res.ok && data && data.success) {
           successMsg.classList.remove('hidden');
           form.reset();
         } else {
