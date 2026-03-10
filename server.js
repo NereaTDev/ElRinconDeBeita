@@ -4,13 +4,12 @@ const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Seguridad básica HTTP
-app.use(helmet());
+// Seguridad básica HTTP (⚠️ desactivado temporalmente para no bloquear Tailwind CDN)
+// app.use(helmet());
 
 // Parseo de JSON (lo usaremos para el formulario de contacto)
 app.use(express.json());
@@ -24,32 +23,20 @@ const contactLimiter = rateLimit({
   max: 5,              // máx. 5 peticiones por minuto desde la misma IP
 });
 
-// Configuración del transporte de correo (SMTP)
-const smtpHost = process.env.SMTP_HOST;
-const smtpPort = Number(process.env.SMTP_PORT || 587);
-const smtpSecure = String(process.env.SMTP_SECURE || 'false') === 'true';
-const smtpUser = process.env.SMTP_USER;
-const smtpPass = process.env.SMTP_PASS;
-const contactTo = process.env.CONTACT_TO || smtpUser;
+// Configuración de Brevo (API v3)
+const brevoApiKey = process.env.BREVO_API_KEY;
+const brevoSenderEmail = process.env.BREVO_SENDER_EMAIL; // ej: no-reply@elrincondebeita.com
+const brevoSenderName = process.env.BREVO_SENDER_NAME || 'El Rincón de Beita';
+const contactTo = process.env.CONTACT_TO || process.env.BREVO_CONTACT_TO;
 
-if (!smtpHost || !smtpUser || !smtpPass) {
-  // No lanzamos error aquí para no romper el dev server, pero lo dejamos claro en logs
-  console.warn('[contact] SMTP no configurado. Define SMTP_HOST, SMTP_USER y SMTP_PASS en .env');
+if (!brevoApiKey || !brevoSenderEmail || !contactTo) {
+  console.warn('[contact] Brevo no está completamente configurado. Define BREVO_API_KEY, BREVO_SENDER_EMAIL y CONTACT_TO/BREVO_CONTACT_TO en .env');
 }
-
-const transporter = smtpHost && smtpUser && smtpPass
-  ? nodemailer.createTransport({
-      host: smtpHost,
-      port: smtpPort,
-      secure: smtpSecure,
-      auth: { user: smtpUser, pass: smtpPass },
-    })
-  : null;
 
 // Endpoint de contacto seguro
 app.post('/api/contact', contactLimiter, async (req, res) => {
   try {
-    if (!transporter) {
+    if (!brevoApiKey || !brevoSenderEmail || !contactTo) {
       return res.status(500).json({
         success: false,
         message: 'El servicio de correo no está configurado. Inténtalo más tarde.',
@@ -85,14 +72,58 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
       <p>${(Mensaje || '').replace(/\n/g, '<br>')}</p>
     `;
 
-    await transporter.sendMail({
-      from: `El Rincón de Beita <${smtpUser}>`,
-      to: contactTo,
-      replyTo: emailTrimmed,
-      subject,
-      text: textBody,
-      html: htmlBody,
+    // 1) Enviar email transaccional vía Brevo
+    const emailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': brevoApiKey,
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify({
+        sender: { name: brevoSenderName, email: brevoSenderEmail },
+        to: [{ email: contactTo, name: brevoSenderName }],
+        replyTo: { email: emailTrimmed, name: Nombre },
+        subject,
+        htmlContent: htmlBody,
+        textContent: textBody,
+      }),
     });
+
+    if (!emailResponse.ok) {
+      const errBody = await emailResponse.text().catch(() => '');
+      console.error('[contact] Error Brevo email:', emailResponse.status, errBody);
+      return res.status(502).json({
+        success: false,
+        message: 'No se ha podido enviar el mensaje en este momento.',
+      });
+    }
+
+    // 2) Crear/actualizar contacto en Brevo (Nombre + Email como "bbdd principal")
+    const contactResponse = await fetch('https://api.brevo.com/v3/contacts', {
+      method: 'POST',
+      headers: {
+        'api-key': brevoApiKey,
+        'Content-Type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify({
+        email: emailTrimmed,
+        attributes: {
+          FIRSTNAME: Nombre,
+          // Si quieres guardar más campos, primero crea los atributos en Brevo y añádelos aquí.
+          // MESSAGE: Mensaje,
+        },
+        updateEnabled: true,
+      }),
+    });
+
+    if (!contactResponse.ok) {
+      const errBody = await contactResponse.text().catch(() => '');
+      // No rompemos la experiencia del usuario si falla el guardado del contacto,
+      // pero lo dejamos logueado para poder revisarlo.
+      console.error('[contact] Error Brevo contact:', contactResponse.status, errBody);
+    }
 
     return res.json({ success: true });
   } catch (err) {
