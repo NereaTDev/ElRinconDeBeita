@@ -542,6 +542,10 @@ const animateColor = () => {
       element: document.querySelector('.site-logo'),
       property: 'color'
     },
+    {
+      element: document.querySelector('.hero-title'),
+      property: 'color'
+    },
 
     {
       element: document.querySelector('.order-button'),
