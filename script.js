@@ -86,12 +86,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Scroll hero interceptado: animación primero, scroll real después (solo desktop)
   const showPageSections = () => {
-    document.querySelector('.page-content')?.classList.remove('is-waiting-hero');
-    document.querySelector('.page-content')?.classList.add('sections-ready');
+    const showSections = document.querySelectorAll('.page-content');
 
-    window.removeEventListener('wheel', showPageSections);
-    window.removeEventListener('touchmove', showPageSections);
-    window.removeEventListener('keydown', showPageSections);
+    showSections.forEach((item) => {
+      item.classList.remove('is-waiting-hero');
+    });
+
   };
 
   window.addEventListener('wheel', showPageSections, { once: true });
