@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Animación de entrada del hero
   if (window.anime) {
     window.anime
-      .timeline({ easing: 'easeOutQuad', duration: 700 })
+      .timeline({ easing: 'easeOutQuad', duration: 500 })
       .add({
         targets: '.hero-title',
         translateY: [20, 0],
@@ -26,25 +26,62 @@ document.addEventListener('DOMContentLoaded', function () {
         opacity: [0, 1]
       }, '-=300')
       .add({
-        targets: '.hero-tags .tag',
-        opacity: [0, 1],
-        translateY: [10, 0],
-        delay: window.anime.stagger(40)
-      }, '-=250')
-      .add({
         targets: '.hero-actions > *',
         opacity: [0, 1],
         translateY: [10, 0],
-        delay: window.anime.stagger(60)
+        delay: window.anime.stagger(60),
+        complete: () => {
+          document.querySelectorAll('.hero-actions > *').forEach(el => {
+            el.style.opacity = '';
+            el.style.transform = '';
+          });
+        }
       }, '-=200')
       .add({
-        // Aparición suave del cuadro del carrusel para integrarse con el resto del hero
-        // Sin tocar la posición final: solo opacidad y una ligera escala
+        targets: '.hero-tag',
+        opacity: [0, 1],
+        translateY: [10, 0],
+        delay: window.anime.stagger(40)
+      }, '-=350')
+      .add({
         targets: '.hero-text-viewport',
         opacity: [0, 1],
         scale: [0.96, 1],
         duration: 500
-      }, '-=350');
+      }, '-=350')
+      .add({
+        targets: '.hero-intro-circle',
+        opacity: [0, 1],
+        translateX: [120, 0],
+        scale: [0.9, 1],
+        duration: 700,
+        easing: 'easeOutCubic'
+      }, '+=150')
+
+      .add({
+        targets: '.hero-intro-cake',
+        opacity: [0, 1],
+        translateX: [160, 0],
+        duration: 800,
+        easing: 'easeOutCubic'
+      }, '-=350')
+
+      .add({
+        targets: '.circle-label.hero-intro-hidden',
+        opacity: [0, 1],
+        duration: 700,
+        delay: window.anime.stagger(120),
+        easing: 'easeOutCubic'
+      }, '-=450')
+
+      .finished.then(() => {
+        document.querySelectorAll('.hero-intro-hidden').forEach(el => {
+          el.classList.remove('hero-intro-hidden');
+        });
+
+        document.querySelector('.hero-intro-circle')?.classList.remove('hero-intro-circle');
+        document.querySelector('.hero-intro-cake')?.classList.remove('hero-intro-cake');
+      });
   }
 
   // Scroll hero interceptado: animación primero, scroll real después (solo desktop)
@@ -154,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const endTop = LIST_SLOTS[index];
         const top = start.top + (endTop - start.top) * stackProgress;
         const left = start.left + (50 - start.left) * stackProgress;
-        
+
         label.style.top = `${top}%`;
         label.style.left = `${left}%`;
         label.style.right = 'auto';
@@ -179,8 +216,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const consumeScrollDelta = (delta) => {
       if (!isDesktopHero()) return;
 
-      const next = Math.min(Math.max(heroProgress + delta / SCROLL_BUDGET, 0), 1);
-      if (next === heroProgress) return;
+      const smoothDelta = delta * 0.35;
+
+      const next = Math.min(
+        Math.max(heroProgress + smoothDelta / SCROLL_BUDGET, 0),
+        1
+      ); if (next === heroProgress) return;
 
       heroProgress = next;
       applyHeroProgress(heroProgress);
@@ -476,44 +517,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let page = 0;
 
-    const isDesktop = () => window.innerWidth >= 768;
-    const getItemsPerPage = () => (isDesktop() ? 3 : 1);
-    const getPagesCount = () => {
-      const perPage = getItemsPerPage();
-      return Math.max(1, Math.ceil(items.length / perPage));
-    };
+        const isDesktop = () => window.innerWidth >= 768;
+        const getItemsPerPage = () => (isDesktop() ? 3 : 1);
+        const getPagesCount = () => {
+          const perPage = getItemsPerPage();
+          return Math.max(1, Math.ceil(items.length / perPage));
+        };
 
-    const update = () => {
-      const pages = getPagesCount();
-      if (!isDesktop()) {
-        // mobile: sin transform fijo (swipe manual)
-        track.style.transform = 'translateX(0)';
-        return;
-      }
+        const update = () => {
+          const pages = getPagesCount();
+          if (!isDesktop()) {
+            // mobile: sin transform fijo (swipe manual)
+            track.style.transform = 'translateX(0)';
+            return;
+          }
 
-      if (page >= pages) page = 0;
-      if (page < 0) page = pages - 1;
+          if (page >= pages) page = 0;
+          if (page < 0) page = pages - 1;
 
-      const viewportWidth = viewport.clientWidth;
-      track.style.transform = `translateX(-${page * viewportWidth}px)`;
-    };
+          const viewportWidth = viewport.clientWidth;
+          track.style.transform = `translateX(-${page * viewportWidth}px)`;
+        };
 
-    prevBtn.addEventListener('click', () => {
-      page -= 1;
-      update();
-    });
+        prevBtn.addEventListener('click', () => {
+          page -= 1;
+          update();
+        });
 
-    nextBtn.addEventListener('click', () => {
-      page += 1;
-      update();
-    });
+        nextBtn.addEventListener('click', () => {
+          page += 1;
+          update();
+        });
 
-    window.addEventListener('resize', update);
-    update();
-  })
-  .catch(err => {
-    console.error('Error inicializando la galería:', err);
-  });
+        window.addEventListener('resize', update);
+        update();
+      })
+      .catch(err => {
+        console.error('Error inicializando la galería:', err);
+      });
   })();
 
   // Formulario de contacto — envío AJAX vía Web3Forms (sin backend, sin redirección)

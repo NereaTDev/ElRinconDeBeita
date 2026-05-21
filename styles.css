@@ -21,8 +21,13 @@
   --text-accent: #C09B2D;
 }
 
-html{
+html {
   scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -93,16 +98,14 @@ img {
   justify-content: center;
   padding: 0.6rem 1.6rem;
   border-radius: 999px;
-  border: none;
-  background: var(--accent);
-  color: #fff;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
+  transition: all ease-out 0.3s;
 }
 
 .btn-primary:hover {
-  filter: brightness(1.06);
+  transform: scale(1.05);
 }
 
 .btn-secondary {
@@ -111,16 +114,14 @@ img {
   justify-content: center;
   padding: 0.6rem 1.3rem;
   border-radius: 999px;
-  border: 1px solid #d1d5db;
-  background: #ffffff;
-  color: #4b5563;
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
+  transition: all ease-out 0.3s;
 }
 
 .btn-secondary:hover {
-  background: #f3f4f6;
+  transform: scale(1.05);
 }
 
 /* HERO */
@@ -470,8 +471,7 @@ img {
 .gallery-item {
   flex: 0 0 100%;
   max-width: 100%;
-  /* Fixed card height to align rows and center images nicely */
-  height: 260px; /* tweak this if you want taller/shorter cards */
+  height: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -603,6 +603,7 @@ footer {
 /* Bloqueo de scroll mientras dura la animación del hero (desktop) */
 
 @media (min-width: 769px) {
+
   html.hero-scroll-locked,
   html.hero-scroll-locked body {
     overflow: hidden;
@@ -883,4 +884,16 @@ footer {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
   }
+}
+
+.hero-intro-hidden {
+  opacity: 0;
+}
+
+.hero-intro-circle {
+  transform: translateX(120px) scale(0.9);
+}
+
+.hero-intro-cake {
+  transform: translateX(160px);
 }

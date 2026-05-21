@@ -14,10 +14,8 @@
   <!-- Fuentes: Afacad (texto) y Gamja Flower (decorativa) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;500;600;700&family=Gamja+Flower&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;500;600;700&family=Gamja+Flower&display=swap"
+    rel="stylesheet" />
   <!-- Anime.js para animaciones -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script>
   <script src="script.js" defer></script>
@@ -32,11 +30,15 @@
       </div>
       <nav class="hidden md:block">
         <ul class="flex items-center gap-5 text-base font-medium text-[var(--text-primary)]">
-          <li><a href="#productos" class="underline-none p-2 hover:text-[var(--text-accent)] transition-colors">Productos</a></li>
-          <li><a href="#proceso" class="underline-none p-2 hover:text-[var(--text-accent)] transition-colors">Cómo trabajo</a></li>
-          <li><a href="#galeria" class="underline-none p-2 hover:text-[var(--text-accent)] transition-colors">Galería</a></li>
+          <li><a href="#productos"
+              class="underline-none p-2 hover:text-[var(--text-accent)] transition-colors">Productos</a></li>
+          <li><a href="#proceso" class="underline-none p-2 hover:text-[var(--text-accent)] transition-colors">Cómo
+              trabajo</a></li>
+          <li><a href="#galeria"
+              class="underline-none p-2 hover:text-[var(--text-accent)] transition-colors">Galería</a></li>
           <li><a href="#contacto"
-              class="underline-none hover:bg-[var(--orange)] px-3 py-1 rounded-full bg-[#6D9CF6] text-white transition-colors">Haz tu
+              class="underline-none hover:bg-[var(--orange)] px-3 py-1 rounded-full bg-[#6D9CF6] text-white transition-colors">Haz
+              tu
               pedido</a></li>
           <!-- <li>
             <a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener" class="hover:text-[#c90603] transition-colors">
@@ -58,79 +60,43 @@
           <h1 class="hero-title text-2xl md:text-6xl p-4 md:p-0 font-semibold leading-snug text-[#F27E4D] md:w-[36rem]">
             Un rincón lleno de <span class="hero-highlight">dulces y magia</span>
           </h1>
-          <p class="hero-subtitle mt-4  p-4 md:p-0 text-sm md:text-[1.1rem] text-slate-600 md:max-w-[32rem]">
+          <p
+            class="hero-subtitle mt-4  p-4 md:p-0 text-sm md:text-[1.1rem] text-[var(--text-primary)] md:max-w-[32rem]">
             En El Rincón de Beita creo tartas personalizadas, cookies decoradas y pequeños
             detalles dulces para cumpleaños, comuniones, bautizos y todo lo que te apetezca celebrar.
           </p>
-          <div class="hero-tags mt-4 flex flex-wrap gap-2">
-            <span class="tag text-[0.7rem] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">Tartas
-              personalizadas</span>
-            <span class="tag text-[0.7rem] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">Cookies
-              decoradas</span>
-            <span class="tag text-[0.7rem] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">Mesas dulces</span>
-            <span class="tag text-[0.7rem] px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">Pedidos a medida</span>
-          </div>
           <div class="hero-actions mt-6 flex flex-col sm:flex-row sm:items-center max-md:justify-center gap-3">
             <a href="#contacto"
-              class="btn-primary inline-flex items-center justify-center px-4 py-2 rounded-full bg-[#c90603] text-white text-sm font-medium shadow-sm hover:bg-red-700 transition-colors">
-              Quiero pedir un presupuesto
+              class="btn-primary inline-flex items-center justify-center px-4 py-2 rounded-full bg-[var(--orange)] text-white text-sm font-medium shadow-sm transition-colors">
+              Hacer un pedido
             </a>
             <a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener"
-              class="btn-secondary inline-flex items-center justify-center px-4 py-2 rounded-full border border-slate-300 text-slate-700 text-sm font-medium bg-white/70 hover:bg-white transition-colors">
-              Ver trabajos en Instagram
-            </a>
+              class="btn-secondary inline-flex items-center justify-center px-4 py-2 rounded-full text-white text-sm font-medium bg-[var(--blue)] transition-colors">
+              Solicitar un presupuesto </a>
           </div>
+
+          <div class="hero-tag text-[var(--orange)] text-base mt-6">Respondemos con amor a cada uno de los pedidos...</div>
         </div>
         <!-- Hero gallery and text carousel -->
         <div class="hero-gallery hero-cake-wrapper relative">
 
-          <div class="main-circle" aria-label="Servicios destacados">
-            <p class="circle-label circle-label--tl">Tartas<br>personalizadas</p>
-            <p class="circle-label circle-label--tr">Mesa de<br>Dulces</p>
-            <p class="circle-label circle-label--ml">Pedidos<br>a medida</p>
-            <p class="circle-label circle-label--mr">Cookies<br>Decoradas</p>
+          <div class="main-circle hero-intro-hidden hero-intro-circle" aria-label="Servicios destacados">
+            <p class="circle-label hero-intro-hidden circle-label--tl">Tartas<br>personalizadas</p>
+            <p class="circle-label hero-intro-hidden circle-label--tr">Mesa de<br>Dulces</p>
+            <p class="circle-label hero-intro-hidden circle-label--ml">Pedidos<br>a medida</p>
+            <p class="circle-label hero-intro-hidden circle-label--mr">Cookies<br>Decoradas</p>
           </div>
           <!-- Imagen realista del pastel -->
-          <div class="hero-cake-image">
-            <img class="w-12 h-full object-cover" src="assets/cake-hero.png" alt="Tarta decorada de El Rincón de Beita" />
+          <div class="hero-cake-image hero-intro-hidden hero-intro-cake">
+            <img class="w-12 h-full object-cover" src="assets/cake-hero.png"
+              alt="Tarta decorada de El Rincón de Beita" />
           </div>
-
-          <!-- Carrusel vertical de textos en el lateral derecho -->
-          <!-- <div class="hero-text-carousel">
-            <div class="hero-text-viewport">
-              <div class="hero-text-track">
-                <div class="hero-text-block">
-                  <div class="hero-card-title">Tartas de celebración</div>
-                  <p class="hero-card-text">Diseños limpios, colores suaves y detalles que encajan con tu estilo y tu
-                    evento.</p>
-                </div>
-
-                <div class="hero-text-block">
-                  <div class="hero-card-title">Cookies y pequeños detalles</div>
-                  <p class="hero-card-text">Galletas decoradas, mini dulces y pequeños regalos dulces para tus
-                    invitadas.</p>
-                </div>
-
-                <div class="hero-text-block">
-                  <div class="hero-card-title">Mesas dulces</div>
-                  <p class="hero-card-text">Combinaciones de tartas, cookies y mini dulces para darle a tu evento un
-                    rincón dulce, cuidado y muy fotogénico.</p>
-                </div>
-
-                <div class="hero-text-block">
-                  <div class="hero-card-title">Detalles dulces</div>
-                  <p class="hero-card-text">Tartas, cookies y pequeños bocados pensados para coordinar con tu temática y
-                    crear una mesa dulce acogedora y elegante.</p>
-                </div>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
     </section>
 
     <!-- PRODUCTOS -->
-    <section class="section py-12 md:py-16 mt-14 md:mt-0" id="productos">
+    <section class="section py-12 md:py-16 mt-14 md:mt-0 md:pt-0" id="productos">
       <div class="max-w-6xl mx-auto px-6 reveal-on-scroll">
         <div class="section-header text-center max-w-2xl mx-auto">
           <p class="section-kicker text-[0.75rem] font-semibold tracking-[0.18em] uppercase text-slate-500">Qué puedo
