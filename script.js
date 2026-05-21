@@ -228,6 +228,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (heroProgress >= 1) {
         unlockHeroScroll();
+      
+        document.querySelector('.page-content')?.classList.remove('is-waiting-hero');
+        document.querySelector('.page-content')?.classList.add('sections-ready');
       } else {
         lockHeroScroll();
       }
@@ -635,3 +638,129 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+const productTabs = document.querySelectorAll('.product-tab');
+const productImage = document.getElementById('product-image');
+const productTitle = document.getElementById('product-title');
+const productBadge = document.getElementById('product-badge');
+const productText = document.getElementById('product-text');
+const productsAccordion = document.querySelector('.products-accordion');
+const productCard = document.querySelector('.product-feature-card');
+let productChangeTimeout = null;
+const products = [
+  {
+    title: 'Tartas Personalizadas',
+    badge: 'Desde 6 porciones',
+    text: 'Diseñadas a partir de tu idea: personajes, temática, colores o estilo. Ideal para cumpleaños, aniversarios y eventos familiares.',
+    image: 'assets/gallery/personal-cake.png'
+  },
+  {
+    title: 'Tartas Clásicas',
+    badge: 'Perfectas para llevar de invitado',
+    text: 'Sabores de siempre: chocolate, vainilla, red velvet, zanahoria, etc. Decoración sencilla pero cuidada.',
+    image: 'assets/gallery/birthday-cake.png'
+  },
+  {
+    title: 'Cookies Decoradas',
+    badge: 'Empaquetadas individualmente',
+    text: 'Galletas de mantequilla o cacao decoradas a mano. Ideales como detalles para invitados o para mesas dulces.',
+    image: 'assets/gallery/barbie-cookies.png'
+  },
+  {
+    title: 'Mesas dulces pequeñas',
+    badge: 'Dulces coordinados',
+    text: 'Selección de dulces coordinados para eventos íntimos. Podemos combinar tartas, cookies, cupcakes y otros detalles.',
+    image: 'assets/gallery/sweets-table.png'
+  },
+  {
+    title: 'Cupcakes especiales',
+    badge: 'Bocados dulces',
+    text: 'Mini tartas, cupcakes y otros bocados dulces para acompañar tu tarta principal o montar una mesa dulce.',
+    image: 'assets/gallery/sweets-box.png'
+  },
+  {
+    title: 'Detalles dulces personalizados',
+    badge: 'Cajitas regalo y packs',
+    text: 'Cajitas regalo, packs temáticos y detalles dulces personalizados para sorprender a quien tú quieras.',
+    image: 'assets/gallery/minnie-pops.png'
+  }
+];
+
+let activeProduct = 0;
+let productInterval = null;
+
+const showProduct = (index) => {
+  if (index === activeProduct) return;
+
+  activeProduct = index;
+
+  clearTimeout(productChangeTimeout);
+
+  productTabs.forEach((tab, i) => {
+    tab.classList.toggle('is-active', i === index);
+  });
+
+  productCard.classList.add('is-changing');
+
+  productChangeTimeout = setTimeout(() => {
+    const product = products[index];
+
+    productImage.src = product.image;
+    productTitle.textContent = product.title;
+    productBadge.textContent = product.badge;
+    productText.textContent = product.text;
+
+    productCard.classList.remove('is-changing');
+  }, 160);
+};
+
+const startProductsAutoPlay = () => {
+  clearInterval(productInterval);
+
+  productInterval = setInterval(() => {
+    const nextProduct = (activeProduct + 1) % products.length;
+    showProduct(nextProduct);
+  }, 4200);
+};
+const stopProductsAutoPlay = () => {
+  clearInterval(productInterval);
+};
+
+productTabs.forEach((tab, index) => {
+  tab.addEventListener('mouseenter', () => {
+    stopProductsAutoPlay();
+    showProduct(index);
+  });
+
+  tab.addEventListener('focus', () => {
+    stopProductsAutoPlay();
+    showProduct(index);
+  });
+});
+
+productsAccordion.addEventListener('mouseenter', stopProductsAutoPlay);
+productsAccordion.addEventListener('mouseleave', startProductsAutoPlay);
+
+const productsSection = document.querySelector('#productos');
+let productsStarted = false;
+
+const startProductsWhenVisible = () => {
+  if (productsStarted) return;
+
+  const sectionTop = productsSection.getBoundingClientRect().top;
+  const windowHeight = window.innerHeight;
+
+  if (sectionTop < windowHeight * 0.65) {
+    productsStarted = true;
+
+    activeProduct = -1;
+    showProduct(0);
+    startProductsAutoPlay();
+
+    window.removeEventListener('scroll', startProductsWhenVisible);
+  }
+};
+
+window.addEventListener('scroll', startProductsWhenVisible);
+startProductsWhenVisible();

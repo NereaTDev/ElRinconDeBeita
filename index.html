@@ -50,9 +50,9 @@
     </div>
   </header>
 
-  <main class="max-md:flex flex-col justify-between max-md:gap-10">
+  <main class="page-content is-waiting-hero max-md:flex flex-col justify-between max-md:gap-10">
     <!-- HERO -->
-    <section class="hero pb-12 md:py-16">
+    <section class="hero pb-12 md:py-16 lg:pt-28 md:pb-10">
       <div
         class="max-w-6xl mx-auto md:py-14 px-6 grid gap-10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-center hero-grid">
         <!-- Hero title and Actions -->
@@ -75,7 +75,8 @@
               Solicitar un presupuesto </a>
           </div>
 
-          <div class="hero-tag text-[var(--orange)] text-base mt-6">Respondemos con amor a cada uno de los pedidos...</div>
+          <div class="hero-tag text-[var(--orange)] text-base mt-6">Respondemos con amor a cada uno de los pedidos...
+          </div>
         </div>
         <!-- Hero gallery and text carousel -->
         <div class="hero-gallery hero-cake-wrapper relative">
@@ -99,56 +100,40 @@
     <section class="section py-12 md:py-16 mt-14 md:mt-0 md:pt-0" id="productos">
       <div class="max-w-6xl mx-auto px-6 reveal-on-scroll">
         <div class="section-header text-center max-w-2xl mx-auto">
-          <p class="section-kicker text-[0.75rem] font-semibold tracking-[0.18em] uppercase text-slate-500">Qué puedo
+          <p class="section-kicker text-4xl font-semibold text-[var(--purple)]">Qué puedo
             preparar para ti</p>
-          <h2 class="section-title mt-2 text-xl md:text-2xl font-semibold text-slate-900">Productos dulces para momentos
+          <h2 class="section-title text-xl md:text-lg font-medium text-[var(--text-primary)]">Productos dulces para
+            momentos
             especiales</h2>
-          <p class="section-subtitle mt-3 text-sm md:text-base text-slate-600">Cada encargo es único. Estos son algunos
-            de los tipos de trabajo que suelo hacer en El Rincón de Beita.</p>
+          <!-- <p class="section-subtitle mt-3 text-sm md:text-base text-slate-600">Cada encargo es único. Estos son algunos
+            de los tipos de trabajo que suelo hacer en El Rincón de Beita.</p> -->
         </div>
 
-        <div class="products-grid mt-8 grid gap-5 md:grid-cols-3">
-          <article class="product-card p-4 rounded-xl bg-white shadow-sm border border-slate-100 md:min-h-[200px]">
-            <span class="product-title text-sm font-semibold text-slate-900">Tartas personalizadas</span>
-            <p class="product-text mt-2 text-sm text-slate-600">Diseñadas a partir de tu idea: personajes, temática,
-              colores o estilo. Ideal para cumpleaños, aniversarios y eventos familiares.</p>
-            <span class="badge mt-3 inline-flex text-[0.7rem] px-2 py-1 rounded-full">Tamaños desde 6 porciones</span>
-          </article>
+        <div class="products-accordion mt-8">
+          <div class="products-menu">
+            <button class="product-tab is-active" data-product="0">Tartas Personalizadas</button>
+            <button class="product-tab" data-product="1">Tartas Clásicas</button>
+            <button class="product-tab" data-product="2">Cookies Decoradas</button>
+            <button class="product-tab" data-product="3">Mesas dulces pequeñas</button>
+            <button class="product-tab" data-product="4">Cupcakes especiales</button>
+            <button class="product-tab" data-product="5">Detalles dulces personalizados</button>
+          </div>
 
-          <article class="product-card p-4 rounded-xl bg-white shadow-sm border border-slate-100 md:min-h-[200px]">
-            <span class="product-title text-sm font-semibold text-slate-900">Tartas clásicas</span>
-            <p class="product-text mt-2 text-sm text-slate-600">Sabores de siempre: chocolate, vainilla, red velvet,
-              zanahoria, etc. Decoración sencilla pero cuidada.</p>
-            <span class="badge mt-3 inline-flex text-[0.7rem] px-2 py-1 rounded-full">Perfectas para llevar de
-              invitado</span>
-          </article>
+          <!-- Template -->
+          <div class="product-feature-card">
+            <img id="product-image" alt="Producto dulce" />
+            <div class="product-feature-content flex flex-col justify-evenly z-10">
+              <h3 id="product-title"></h3>
+              <p id="product-badge"></p>
+              <p id="product-text"></p>
+              <a href="#contacto" class="product-order-btn">
+                Hacer un pedido
+              </a>
+            </div>
+          </div>
 
-          <article class="product-card p-4 rounded-xl bg-white shadow-sm border border-slate-100 md:min-h-[200px]">
-            <span class="product-title text-sm font-semibold text-slate-900">Cookies decoradas</span>
-            <p class="product-text mt-2 text-sm text-slate-600">Galletas de mantequilla o cacao decoradas a mano.
-              Ideales como detalles para invitados o para mesas dulces.</p>
-            <span class="badge mt-3 inline-flex text-[0.7rem] px-2 py-1 rounded-full">Se pueden empaquetar
-              individualmente</span>
-          </article>
-
-          <article class="product-card p-4 rounded-xl bg-white shadow-sm border border-slate-100 md:min-h-[200px]">
-            <span class="product-title text-sm font-semibold text-slate-900">Cupcakes y mini dulces</span>
-            <p class="product-text mt-2 text-sm text-slate-600">Mini tartas, cupcakes y otros bocados dulces para
-              acompañar tu tarta principal o montar una mesa dulce.</p>
-          </article>
-
-          <article class="product-card p-4 rounded-xl bg-white shadow-sm border border-slate-100 md:min-h-[200px]">
-            <span class="product-title text-sm font-semibold text-slate-900">Mesas dulces pequeñas</span>
-            <p class="product-text mt-2 text-sm text-slate-600">Selección de dulces coordinados para eventos íntimos.
-              Podemos combinar tartas, cookies, cupcakes y otros detalles.</p>
-          </article>
-
-          <article class="product-card p-4 rounded-xl bg-white shadow-sm border border-slate-100 md:min-h-[200px]">
-            <span class="product-title text-sm font-semibold text-slate-900">Detalles personalizados</span>
-            <p class="product-text mt-2 text-sm text-slate-600">Cajitas regalo, packs temáticos y detalles dulces
-              personalizados para sorprender a quien tú quieras.</p>
-          </article>
         </div>
+      </div>
       </div>
     </section>
 
@@ -297,15 +282,18 @@
     </section>
   </main>
 
-  <footer class="border-t border-slate-200 bg-white/70">
-    <div
-      class="footer-inner max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[0.75rem] text-slate-500">
-      <span>El Rincón de Beita · <span id="footer-year"></span> © Hecho a mano con mucho cariño.</span>
-      <div class="footer-links flex items-center gap-2">
-        <a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener"
-          class="transition-colors">Instagram</a>
+
+  <footer class="page-content is-waiting-hero">
+    <section class="border-t border-slate-200 bg-white/70">
+      <div
+        class="footer-inner max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[0.75rem] text-slate-500">
+        <span>El Rincón de Beita · <span id="footer-year"></span> © Hecho a mano con mucho cariño.</span>
+        <div class="footer-links flex items-center gap-2">
+          <a href="https://www.instagram.com/el_rincon_de_beita" target="_blank" rel="noopener"
+            class="transition-colors">Instagram</a>
+        </div>
       </div>
-    </div>
+    </section>
   </footer>
 
   <script>

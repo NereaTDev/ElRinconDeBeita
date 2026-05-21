@@ -5,5 +5,7 @@
     "titleBar.activeForeground": "#FCF9FB",
     "titleBar.inactiveBackground": "#422436",
     "titleBar.inactiveForeground": "#FCF9FB"
-  }
+  },
+  "cursor.cmdk.useThemedDiffBackground2": false,
+  "cursor.inlineDiff.enablePerformanceProtection": false
 }

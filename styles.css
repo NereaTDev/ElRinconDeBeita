@@ -323,13 +323,6 @@ img {
   margin-bottom: 1.7rem;
 }
 
-.section-kicker {
-  text-transform: uppercase;
-  letter-spacing: 0.19em;
-  font-size: 0.7rem;
-  color: #9ca3af;
-}
-
 .section-title {
   font-size: 1.4rem;
   margin: 0.15rem 0;
@@ -358,13 +351,6 @@ img {
   gap: 0.4rem;
   transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out, background-color 0.18s ease-out;
 }
-
-/* @media (max-width: 1200px) {
-  .hero-text-carousel {
-    transform: translateY(175px) translateX(10px);
-  }
-} */
-
 @media (min-width: 769px) {
 
   /* Hover suave de las cards de "Qué puedo preparar para ti" solo en desktop */
@@ -558,7 +544,6 @@ textarea:focus {
 /* FOOTER */
 
 footer {
-  border-top: 1px solid var(--border-subtle);
   background: #ffffff;
 }
 
@@ -803,7 +788,6 @@ footer {
 
   .hero-card-text {
     font-size: 0.9rem;
-    line-height: 1.5;
     color: #f3f4f6;
   }
 
@@ -896,4 +880,149 @@ footer {
 
 .hero-intro-cake {
   transform: translateX(160px);
+}
+
+
+.products-accordion {
+  display: grid;
+  grid-template-columns: 0.9fr 1.8fr;
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.products-menu {
+  background: #fff3c8;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.product-tab {
+  text-align: left;
+  font-family: inherit;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: #c99a17;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.product-tab:hover,
+.product-tab.is-active {
+  color: #a88bdc;
+  transform: translateX(6px);
+}
+
+.product-feature-card {
+  background: #ded6f3;
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  display: grid;
+  grid-template-columns: 0.8fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  height: 400px;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.product-feature-card img {
+  width: 100%;
+  max-height: 230px;
+  object-fit: cover;
+  filter: drop-shadow(0 16px 12px rgba(0, 0, 0, 0.2));
+  height: inherit;
+  overflow: initial;
+  display: block;
+}
+
+.product-feature-content h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #33415f;
+}
+
+.product-feature-content > p:first-of-type {
+  margin-top: 0.4rem;
+  font-family: "Gamja Flower", cursive;
+  font-size: 1.7rem;
+  color: #a88bdc;
+}
+
+.product-feature-content > p:last-of-type {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #4b628f;
+}
+
+.product-order-btn {
+  margin-top: 2rem;
+  display: inline-flex;
+  justify-content: center;
+  padding: 0.65rem 2rem;
+  border-radius: 999px;
+  background: #a88bdc;
+  color: white;
+  font-weight: 700;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.product-order-btn:hover {
+  transform: scale(1.05);
+  background: #9274ce;
+}
+
+@media (max-width: 768px) {
+  .products-accordion {
+    grid-template-columns: 1fr;
+  }
+
+  .product-feature-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .products-menu {
+    padding: 1.5rem;
+  }
+
+  .product-tab {
+    font-size: 1.1rem;
+  }
+}
+
+.product-feature-card img,
+.product-feature-content h3,
+.product-feature-content p {
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.product-feature-card.is-changing img,
+.product-feature-card.is-changing h3,
+.product-feature-card.is-changing p {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.page-content.is-waiting-hero section:not(.hero) {
+  display: none;
+}
+
+.page-content.sections-ready section:not(.hero) {
+  display: block;
+  animation: sectionFadeUp 0.7s ease-out both;
+}
+
+@keyframes sectionFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
