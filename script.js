@@ -54,25 +54,25 @@ document.addEventListener('DOMContentLoaded', function () {
         opacity: [0, 1],
         translateX: [120, 0],
         scale: [0.9, 1],
-        duration: 700,
+        duration: 600,
         easing: 'easeOutCubic'
-      }, '+=150')
+      }, '0')
 
       .add({
         targets: '.hero-intro-cake',
         opacity: [0, 1],
         translateX: [160, 0],
-        duration: 800,
+        duration: 700,
         easing: 'easeOutCubic'
-      }, '-=350')
+      }, '120')
 
       .add({
         targets: '.circle-label.hero-intro-hidden',
         opacity: [0, 1],
-        duration: 700,
-        delay: window.anime.stagger(120),
+        duration: 800,
+        delay: window.anime.stagger(200),
         easing: 'easeOutCubic'
-      }, '-=450')
+      }, '250')
 
       .finished.then(() => {
         document.querySelectorAll('.hero-intro-hidden').forEach(el => {
@@ -85,250 +85,18 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Scroll hero interceptado: animación primero, scroll real después (solo desktop)
-  const cakeWrapper = document.querySelector('.hero-cake-wrapper');
-  const cakeImage = document.querySelector('.hero-cake-image');
-  const mainCircle = document.querySelector('.main-circle');
-  const circleLabels = mainCircle
-    ? Array.from(mainCircle.querySelectorAll('.circle-label'))
-    : [];
+  const showPageSections = () => {
+    document.querySelector('.page-content')?.classList.remove('is-waiting-hero');
+    document.querySelector('.page-content')?.classList.add('sections-ready');
 
-  if (cakeWrapper && cakeImage && mainCircle && circleLabels.length) {
-    const SCROLL_BUDGET = 820;
-    const LIST_SLOTS = [27, 39, 51, 63];
+    window.removeEventListener('wheel', showPageSections);
+    window.removeEventListener('touchmove', showPageSections);
+    window.removeEventListener('keydown', showPageSections);
+  };
 
-    let heroProgress = 0;
-    let heroScrollLocked = false;
-    let labelStarts = null;
-    let touchStartY = null;
-    let cakeLiftMax = -400;
-
-    const isDesktopHero = () => window.innerWidth >= 769;
-    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-
-    const computeCakeLiftMax = () => {
-      const prevProgress = heroProgress;
-      cakeImage.style.setProperty('--cake-lift', '0px');
-      const rect = cakeImage.getBoundingClientRect();
-      cakeLiftMax = -(rect.top + rect.height + 80);
-      if (prevProgress > 0) {
-        applyHeroProgress(prevProgress);
-      }
-    };
-
-    const shouldCaptureScroll = (delta) => {
-      if (!isDesktopHero()) return false;
-      if (window.scrollY > 8) return false;
-      if (heroProgress <= 0 && delta < 0) return false;
-      if (heroProgress < 1) return true;
-      if (heroProgress >= 1 && delta < 0) return true;
-      return false;
-    };
-
-    const captureLabelStarts = () => {
-      const circleRect = mainCircle.getBoundingClientRect();
-      if (!circleRect.width || !circleRect.height) return;
-
-      labelStarts = circleLabels.map((label) => {
-        const rect = label.getBoundingClientRect();
-        return {
-          top: ((rect.top + rect.height / 2 - circleRect.top) / circleRect.height) * 100,
-          left: ((rect.left + rect.width / 2 - circleRect.left) / circleRect.width) * 100,
-        };
-      });
-    };
-
-    const resetHeroScrollFx = () => {
-      heroProgress = 0;
-      heroScrollLocked = false;
-      touchStartY = null;
-      labelStarts = null;
-      document.documentElement.classList.remove('hero-scroll-locked');
-      cakeImage.style.removeProperty('--cake-lift');
-      cakeImage.style.opacity = '';
-      cakeWrapper.classList.remove('is-lifting', 'is-lifted');
-      mainCircle.classList.remove('is-stacking', 'is-stacked');
-      circleLabels.forEach((label) => {
-        label.style.top = '';
-        label.style.left = '';
-        label.style.right = '';
-        label.style.transform = '';
-        label.style.textAlign = '';
-        label.style.opacity = '';
-      });
-    };
-
-    const applyHeroProgress = (progress) => {
-      const cakeProgress = easeOutCubic(Math.min(progress / 0.42, 1));
-      const stackProgress = easeOutCubic(
-        Math.min(Math.max((progress - 0.28) / 0.72, 0), 1)
-      );
-
-      cakeImage.style.setProperty('--cake-lift', `${cakeProgress * cakeLiftMax}px`);
-      cakeImage.style.opacity = progress > 0 ? String(Math.max(0, 1 - cakeProgress * 1.15)) : '';
-
-      cakeWrapper.classList.toggle('is-lifting', progress > 0 && progress < 1);
-      cakeWrapper.classList.toggle('is-lifted', progress >= 1);
-      mainCircle.classList.toggle('is-stacking', stackProgress > 0 && stackProgress < 1);
-      mainCircle.classList.toggle('is-stacked', progress >= 1);
-
-      if (progress === 0) {
-        circleLabels.forEach((label) => {
-          label.style.top = '';
-          label.style.left = '';
-          label.style.right = '';
-          label.style.transform = '';
-          label.style.textAlign = '';
-          label.style.opacity = '';
-        });
-        return;
-      }
-
-      if (!labelStarts) captureLabelStarts();
-      if (!labelStarts) return;
-
-      circleLabels.forEach((label, index) => {
-        const start = labelStarts[index];
-        const endTop = LIST_SLOTS[index];
-        const top = start.top + (endTop - start.top) * stackProgress;
-        const left = start.left + (50 - start.left) * stackProgress;
-
-        label.style.top = `${top}%`;
-        label.style.left = `${left}%`;
-        label.style.right = 'auto';
-        label.style.transform = 'translate(-50%, -50%)';
-        label.style.textAlign = stackProgress > 0.4 ? 'center' : 'left';
-        label.style.opacity = String(0.85 + stackProgress * 0.15);
-      });
-    };
-
-    const unlockHeroScroll = () => {
-      if (!heroScrollLocked) return;
-      heroScrollLocked = false;
-      document.documentElement.classList.remove('hero-scroll-locked');
-    };
-
-    const lockHeroScroll = () => {
-      heroScrollLocked = true;
-      document.documentElement.classList.add('hero-scroll-locked');
-      if (window.scrollY > 0) window.scrollTo(0, 0);
-    };
-
-    const consumeScrollDelta = (delta) => {
-      if (!isDesktopHero()) return;
-
-      const smoothDelta = delta * 0.35;
-
-      const next = Math.min(
-        Math.max(heroProgress + smoothDelta / SCROLL_BUDGET, 0),
-        1
-      ); if (next === heroProgress) return;
-
-      heroProgress = next;
-      applyHeroProgress(heroProgress);
-
-      if (heroProgress >= 1) {
-        unlockHeroScroll();
-      
-        document.querySelector('.page-content')?.classList.remove('is-waiting-hero');
-        document.querySelector('.page-content')?.classList.add('sections-ready');
-      } else {
-        lockHeroScroll();
-      }
-    };
-
-    const onWheel = (e) => {
-      if (!shouldCaptureScroll(e.deltaY)) return;
-      e.preventDefault();
-      lockHeroScroll();
-      consumeScrollDelta(e.deltaY);
-    };
-
-    const onTouchStart = (e) => {
-      if (!isDesktopHero()) return;
-      touchStartY = e.touches[0].clientY;
-    };
-
-    const onTouchMove = (e) => {
-      if (!isDesktopHero() || touchStartY === null) return;
-      const currentY = e.touches[0].clientY;
-      const delta = touchStartY - currentY;
-      touchStartY = currentY;
-      if (delta === 0 || !shouldCaptureScroll(delta)) return;
-      e.preventDefault();
-      lockHeroScroll();
-      consumeScrollDelta(delta);
-    };
-
-    const onKeyDown = (e) => {
-      if (!isDesktopHero()) return;
-
-      const scrollKeys = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' '];
-      if (!scrollKeys.includes(e.key)) return;
-
-      const step = {
-        ArrowDown: 90,
-        ArrowUp: -90,
-        PageDown: 220,
-        PageUp: -220,
-        ' ': e.shiftKey ? -140 : 140,
-      }[e.key];
-
-      if (!shouldCaptureScroll(step)) return;
-
-      e.preventDefault();
-      lockHeroScroll();
-      consumeScrollDelta(step);
-    };
-
-    const onScrollLock = () => {
-      if (heroScrollLocked && isDesktopHero() && window.scrollY !== 0) {
-        window.scrollTo(0, 0);
-      }
-    };
-
-    const initHeroScrollLock = () => {
-      if (!isDesktopHero()) {
-        resetHeroScrollFx();
-        return;
-      }
-
-      if (heroProgress === 0) {
-        labelStarts = null;
-        computeCakeLiftMax();
-        captureLabelStarts();
-      }
-
-      applyHeroProgress(heroProgress);
-
-      if (heroProgress < 1 && window.scrollY <= 8) {
-        lockHeroScroll();
-      } else {
-        unlockHeroScroll();
-      }
-    };
-
-    initHeroScrollLock();
-
-    window.addEventListener('wheel', onWheel, { passive: false });
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
-    window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('scroll', onScrollLock, { passive: true });
-    window.addEventListener('resize', () => {
-      if (!isDesktopHero()) {
-        resetHeroScrollFx();
-        return;
-      }
-      if (window.scrollY <= 8 && heroProgress === 0) {
-        labelStarts = null;
-        computeCakeLiftMax();
-        captureLabelStarts();
-      } else {
-        computeCakeLiftMax();
-      }
-      initHeroScrollLock();
-    });
-  }
+  window.addEventListener('wheel', showPageSections, { once: true });
+  window.addEventListener('touchmove', showPageSections, { once: true });
+  window.addEventListener('keydown', showPageSections, { once: true });
 
   // Carrusel vertical de textos superpuestos sobre la tarta (componente propio)
   const heroTrack = document.querySelector('.hero-text-track');
@@ -764,3 +532,50 @@ const startProductsWhenVisible = () => {
 
 window.addEventListener('scroll', startProductsWhenVisible);
 startProductsWhenVisible();
+
+
+// Colors Animation
+const animateColor = () => {
+
+  const animatedElements = [
+    {
+      element: document.querySelector('.site-logo'),
+      property: 'color'
+    },
+
+    {
+      element: document.querySelector('.order-button'),
+      property: 'backgroundColor'
+    },
+
+    {
+      element: document.querySelector('.main-circle'),
+      property: 'backgroundColor'
+    }
+  ];
+
+  const colors = [
+    'var(--purple)',
+    'var(--orange)',
+    'var(--blue)'
+  ];
+
+  let colorIndex = 0;
+
+  setInterval(() => {
+
+    colorIndex = (colorIndex + 1) % colors.length;
+
+    animatedElements.forEach((item) => {
+
+      if (!item.element) return;
+
+      item.element.style[item.property] = colors[colorIndex];
+
+    });
+
+  }, 7000);
+
+};
+
+animateColor();

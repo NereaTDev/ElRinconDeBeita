@@ -351,6 +351,7 @@ img {
   gap: 0.4rem;
   transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out, background-color 0.18s ease-out;
 }
+
 @media (min-width: 769px) {
 
   /* Hover suave de las cards de "Qué puedo preparar para ti" solo en desktop */
@@ -944,14 +945,14 @@ footer {
   color: #33415f;
 }
 
-.product-feature-content > p:first-of-type {
+.product-feature-content>p:first-of-type {
   margin-top: 0.4rem;
   font-family: "Gamja Flower", cursive;
   font-size: 1.7rem;
   color: #a88bdc;
 }
 
-.product-feature-content > p:last-of-type {
+.product-feature-content>p:last-of-type {
   margin-top: 1rem;
   font-size: 1.1rem;
   color: #4b628f;
@@ -1025,4 +1026,12 @@ footer {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.site-logo,
+.order-button,
+.main-circle {
+  transition:
+    color 0.8s ease,
+    background-color 0.8s ease;
 }
