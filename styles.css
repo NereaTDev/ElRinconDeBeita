@@ -141,6 +141,9 @@ img {
   font-size: clamp(2.1rem, 3.2vw, 2.7rem);
   line-height: 1.1;
   margin: 0 0 0.75rem;
+  white-space: pre-line;
+  max-width: 70%;
+  min-height: 8rem;
 }
 
 .hero-subtitle {
@@ -216,6 +219,8 @@ img {
 .circle-label {
   position: absolute;
   margin: 0;
+  white-space: pre-line;
+  max-width: 90px;
   font-family: "Gamja Flower", cursive;
   font-size: 1.45rem;
   font-weight: 400;
@@ -803,9 +808,9 @@ footer {
   }
 }
 
-.hero-intro-hidden {
+/* .hero-intro-hidden {
   opacity: 0;
-}
+} */
 
 .hero-intro-circle {
   transform: translateX(120px) scale(0.9);
@@ -937,17 +942,6 @@ footer {
 .product-feature-card.is-changing p {
   opacity: 0;
   transform: translateY(6px);
-}
-
-.page-content.is-waiting-hero section:not(.hero),
-.page-content.is-waiting-hero footer > section {
-  display: none;
-}
-
-.page-content.sections-ready section:not(.hero),
-.page-content footer {
-  display: initial;
-  animation: sectionFadeUp 0.7s ease-out both;
 }
 
 @keyframes sectionFadeUp {

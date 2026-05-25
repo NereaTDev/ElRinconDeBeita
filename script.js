@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         translateX: [120, 0],
         scale: [0.9, 1],
         duration: 600,
-        easing: 'easeOutCubic'
+        // easing: 'easeOutCubic'
       }, '0')
 
       .add({
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         opacity: [0, 1],
         translateX: [160, 0],
         duration: 700,
-        easing: 'easeOutCubic'
+        // easing: 'easeOutCubic'
       }, '120')
 
       .add({
@@ -81,74 +81,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.querySelector('.hero-intro-circle')?.classList.remove('hero-intro-circle');
         document.querySelector('.hero-intro-cake')?.classList.remove('hero-intro-cake');
+
+        typeHeroTitle();
       });
   }
 
-  // Scroll hero interceptado: animación primero, scroll real después (solo desktop)
-  const showPageSections = () => {
-    const showSections = document.querySelectorAll('.page-content');
+  const typeHeroTitle = () => {
+    const typeHeroTitle = document.querySelectorAll('.hero-title');
 
-    showSections.forEach((item) => {
-      item.classList.remove('is-waiting-hero');
+    typeHeroTitle.forEach((label, labelIndex) => {
+      const originalText = label.textContent.trim();
+
+      label.textContent = '';
+
+      let letterIndex = 0;
+
+      setTimeout(() => {
+        const typing = setInterval(() => {
+          label.textContent += originalText.charAt(letterIndex);
+          letterIndex++;
+
+          if (letterIndex >= originalText.length) {
+            clearInterval(typing);
+          }
+        }, 45);
+      }, labelIndex * 700);
     });
-
   };
 
-  window.addEventListener('wheel', showPageSections, { once: true });
-  window.addEventListener('touchmove', showPageSections, { once: true });
-  window.addEventListener('keydown', showPageSections, { once: true });
+  typeHeroTitle();
 
-  // Carrusel vertical de textos superpuestos sobre la tarta (componente propio)
-  const heroTrack = document.querySelector('.hero-text-track');
-  const heroViewport = document.querySelector('.hero-text-viewport');
-  const heroBlocks = heroTrack ? heroTrack.querySelectorAll('.hero-text-block') : [];
+  // Scroll hero interceptado: animación primero, scroll real después (solo desktop)
+  // const showPageSections = () => {
+  //   const showSections = document.querySelectorAll('.page-content');
 
-  if (heroTrack && heroViewport && heroBlocks.length > 0) {
-    let index = 0;
-    let slideHeight = 0;
+  //   showSections.forEach((item) => {
+  //     item.classList.remove('is-waiting-hero');
+  //   });
 
-    const updateLayout = () => {
-      if (!heroBlocks.length) return;
-
-      // Calculamos la altura máxima natural SOLO la primera vez (para que no "crezca" en cada ciclo)
-      if (!slideHeight) {
-        const naturalMax = Array.from(heroBlocks).reduce((max, block) => {
-          const h = block.scrollHeight || block.offsetHeight || 0;
-          return h > max ? h : max;
-        }, 0);
-
-        if (!naturalMax) return;
-
-        // Damos un poco de aire extra y usamos esa altura fija para TODOS los slides
-        slideHeight = naturalMax + 12; // ajusta 12px si quieres más o menos padding vertical
-
-        heroBlocks.forEach(block => {
-          block.style.height = `${slideHeight}px`;
-          block.style.display = 'flex';
-          block.style.flexDirection = 'column';
-          block.style.justifyContent = 'center';
-        });
-
-        // El viewport tiene exactamente la altura del slide para no mostrar restos de otros
-        heroViewport.style.height = `${slideHeight}px`;
-      }
-
-      // Posicionamos el track en el bloque actual usando la altura del slide
-      heroTrack.style.transform = `translateY(-${index * slideHeight}px)`;
-    };
-
-    // Layout inicial
-    updateLayout();
-
-    if (heroBlocks.length > 1) {
-      window.addEventListener('resize', updateLayout);
-
-      setInterval(() => {
-        index = (index + 1) % heroBlocks.length;
-        updateLayout();
-      }, 4000);
-    }
-  }
+  // };
+  // window.addEventListener('wheel', showPageSections, { once: true });
+  // window.addEventListener('touchmove', showPageSections, { once: true });
+  // window.addEventListener('keydown', showPageSections, { once: true });
 
   // Animaciones al hacer scroll en secciones
   const observer = new IntersectionObserver(entries => {
@@ -161,172 +135,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-  // "Abanico" de productos en mobile: solo la card centrada en pantalla se despliega
-  (function () {
-    const cards = Array.from(document.querySelectorAll('#productos .product-card'));
-    if (!cards.length) return;
+  // Scroll suave para enlaces internos (nav y CTA hero)
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href').slice(1);
+      if (!targetId) return;
+      const targetEl = document.getElementById(targetId);
+      if (!targetEl) return;
+      e.preventDefault();
+      const headerOffset = 72; // altura aproximada del header
+      const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - headerOffset;
 
-    const isMobile = () => window.innerWidth <= 768;
-
-    const updateActiveCard = () => {
-      if (!isMobile()) {
-        cards.forEach(card => card.classList.remove('is-active'));
-        return;
-      }
-
-      const viewportCenter = window.innerHeight / 2;
-      let bestCard = null;
-      let bestDistance = Infinity;
-
-      cards.forEach(card => {
-        const rect = card.getBoundingClientRect();
-        const cardCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(cardCenter - viewportCenter);
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          bestCard = card;
-        }
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
       });
+    });
+  });
 
-      if (!bestCard) return;
-      cards.forEach(card => card.classList.toggle('is-active', card === bestCard));
-    };
 
-    let ticking = false;
-    const onScroll = () => {
-      if (!isMobile()) return;
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateActiveCard();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', updateActiveCard);
-
-    // Estado inicial
-    updateActiveCard();
-  })();
-
-  // Carrusel de galería (3 en desktop, swipe en mobile)
-  (function () {
-    const wrapper = document.querySelector('#galeria .gallery-wrapper');
-    if (!wrapper) return;
-
-    const viewport = wrapper.querySelector('.gallery-viewport');
-    const track = wrapper.querySelector('#demo-gallery-track');
-    const prevBtn = wrapper.querySelector('.gallery-prev');
-    const nextBtn = wrapper.querySelector('.gallery-next');
-
-    if (!viewport || !track || !prevBtn || !nextBtn) return;
-
-    // Cargamos la lista de imágenes generada por tools/generate-gallery.js
-    fetch('./assets/gallery/index.json')
-      .then(response => {
-        if (!response.ok) throw new Error('No se pudo cargar index.json de la galería');
-        return response.json();
-      })
-      .then(galleryImages => {
-        if (!Array.isArray(galleryImages) || galleryImages.length === 0) return;
-
-        // Elementos del modal de imagen
-        const modal = document.getElementById('gallery-modal');
-        const modalImg = document.getElementById('gallery-modal-image');
-        const modalCaption = document.getElementById('gallery-modal-caption');
-        const modalClose = document.getElementById('gallery-modal-close');
-
-        const openModal = (src, alt) => {
-          if (!modal || !modalImg) return;
-          modalImg.src = src;
-          modalImg.alt = alt || '';
-          if (modalCaption) {
-            modalCaption.textContent = alt || '';
-          }
-          modal.classList.remove('hidden');
-          modal.classList.add('flex');
-        };
-
-        const closeModal = () => {
-          if (!modal) return;
-          modal.classList.add('hidden');
-          modal.classList.remove('flex');
-        };
-
-        if (modalClose) {
-          modalClose.addEventListener('click', closeModal);
-        }
-        if (modal) {
-          modal.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-          });
-        }
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape') closeModal();
-        });
-
-        // Limpiamos el track y generamos las figuras en base a ese JSON
-        track.innerHTML = '';
-        galleryImages.forEach(img => {
-          const figure = document.createElement('figure');
-          figure.className = 'gallery-item overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 cursor-pointer';
-
-          const imageEl = document.createElement('img');
-          imageEl.src = img.src;
-          imageEl.alt = img.alt || '';
-          imageEl.className = 'w-[88%] h-56 object-contain md:object-cover';
-
-          figure.appendChild(imageEl);
-          figure.addEventListener('click', () => openModal(imageEl.src, imageEl.alt));
-          track.appendChild(figure);
-        });
-
-        const items = Array.from(track.querySelectorAll('.gallery-item'));
-        if (!items.length) return;
-
-        let page = 0;
-
-        const isDesktop = () => window.innerWidth >= 768;
-        const getItemsPerPage = () => (isDesktop() ? 3 : 1);
-        const getPagesCount = () => {
-          const perPage = getItemsPerPage();
-          return Math.max(1, Math.ceil(items.length / perPage));
-        };
-
-        const update = () => {
-          const pages = getPagesCount();
-          if (!isDesktop()) {
-            // mobile: sin transform fijo (swipe manual)
-            track.style.transform = 'translateX(0)';
-            return;
-          }
-
-          if (page >= pages) page = 0;
-          if (page < 0) page = pages - 1;
-
-          const viewportWidth = viewport.clientWidth;
-          track.style.transform = `translateX(-${page * viewportWidth}px)`;
-        };
-
-        prevBtn.addEventListener('click', () => {
-          page -= 1;
-          update();
-        });
-
-        nextBtn.addEventListener('click', () => {
-          page += 1;
-          update();
-        });
-
-        window.addEventListener('resize', update);
-        update();
-      })
-      .catch(err => {
-        console.error('Error inicializando la galería:', err);
-      });
-  })();
 
   // Formulario de contacto — envío AJAX vía Web3Forms (sin backend, sin redirección)
   (function () {
@@ -386,28 +214,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   })();
-
-  // Scroll suave para enlaces internos (nav y CTA hero)
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', function (e) {
-      const targetId = this.getAttribute('href').slice(1);
-      if (!targetId) return;
-      const targetEl = document.getElementById(targetId);
-      if (!targetEl) return;
-      e.preventDefault();
-      const headerOffset = 72; // altura aproximada del header
-      const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    });
-  });
 });
 
 
+// Acordeón de Productos
 const productTabs = document.querySelectorAll('.product-tab');
 const productImage = document.getElementById('product-image');
 const productTitle = document.getElementById('product-title');
@@ -455,7 +265,7 @@ const products = [
   }
 ];
 
-let activeProduct = 0;
+let activeProduct = 1;
 let productInterval = null;
 
 const showProduct = (index) => {
@@ -522,7 +332,7 @@ const startProductsWhenVisible = () => {
   if (sectionTop < windowHeight * 0.65) {
     productsStarted = true;
 
-    activeProduct = -1;
+    activeProduct = 1;
     showProduct(0);
     startProductsAutoPlay();
 
